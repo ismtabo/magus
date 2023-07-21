@@ -1,0 +1,72 @@
+version: "v1" # ignored by now
+name: "Instance templates"
+root: "." # root dir (this can be ovewriten later by `--dir` option)
+variables: # collection of variables available in templates
+  - name: TemplateVariable
+    template: "${{ .Variable }}"
+  - name: LiteralVariable
+    value: 1 
+  - name: EnvVariable
+    env: SOME_ENV_VARIABLE
+casts: # prints represents a collection of templates render process
+  cast-from-string:
+    to: "./salute.md" # dest path to render file
+    from: "Hello {{ .Name }}!" # templates string source 
+  cast-from-file:
+    to: "./outfile.md" # templates with templated string source requites path variables
+    from: # source coming from template file
+      file: path/to/file
+  cast-from-document:
+    to: "./outdir" # dest path to render files
+    from: # source coming from scaffdog document with multiple templates
+      document: templates/template.md
+  cast-from-Magic:
+    to: "./outdir"
+    from: # source coming from other Magic manifest
+      magic: ./other/Magic.yml
+  cast-from-Magic-with-schemstics-selector:
+    to: "./outdir"
+    from:
+      magic: ./other/Magic.yml
+      casts: # (optional) select specific templates to print
+        - Cast-in-particular
+  cast-with-templated-to:
+    to: "{{ .Name }}.md"
+    from: "Hello {{ .Name }}!"
+  cast-with-variables:
+    to: "./salute.md"
+    from: "Hello {{ .NestedTemplateVariable }}!"
+    variables: # (optional) variables extra to add to context
+      - name: NestedTemplateVariable
+        template: "${{ .Variable }}"
+      - name: NestedLiteralVariable
+        value: 1 
+      - name: NestedEnvVariable
+        env: SOME_ENV_VARIABLE
+  optional-if-cast:
+    to: "./outfile.md"
+    from: "Hello {{ .Name }}!"
+    if: "{{ .Enabled }}" # String template that renders to JSON compatible string. To be later evaluated as boolean
+  optional-unless-cast:
+    to: "./outfile.md"
+    from: "Hello {{ .Name }}!"
+    unless: "{{ .Disabled }}" # negated condition of `if` property
+  iterable-cast:
+    to: "./outfile-{{ .It.Name }}.md"
+    from: "Hello {{ .It.Name }}!"
+    each: "{{ .Array }}" # String template that renders to JSON compatible string. To be later evaluated as Iterable
+  iterable-cast-with-as:
+    to: "./salute-to-{{ .Item.Name }}.md"
+    from: "Hello {{ .Item.Name }}!"
+    each: "{{ .Array }}"
+    as: Item # (optional) name of elements name in context (default: It). Object/Map are passed as entries
+  iterable-cast-with-include:
+    to: "./salute-to-{{ .It.Name }}.md"
+    from: "Hello {{ .It.Name }}!"
+    each: "{{ .Array }}"
+    include: "{{ .It.Enabled }}" # condition applied to each item
+  iterable-cast-with-omit:
+    to: "./outfile.md"
+    from: "Hello {{ .It.Name }}!"
+    each: "{{ .Array }}"
+    omit: "{{ .It.Disabled }}"
