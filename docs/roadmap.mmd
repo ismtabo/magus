@@ -12,15 +12,15 @@ gantt
   V1.0.0: milestone, m3, after diff_mode cycle_detection, 0d
 
   Section Comands
-  Validation Command: validation_cmd, after manifest_validation, 1d
-  Generate Command: generate_cmd, after manifest_validation Magic_apply, 1d
+  Validation Command: active, validation_cmd, after manifest_validation, 1d
+  Generate Command: active, generate_cmd, after manifest_validation Magic_apply, 1d
 
   Section Modes
-  Dry Mode: dry_mode, after Magic_apply, 1d
-  Magic Apply: Magic_apply, after Magic_render, 2d
+  Dry Mode: active, dry_mode, after Magic_apply, 1d
+  Magic Apply: active, Magic_apply, after Magic_render, 2d
   Diff Mode: diff_mode, after overwrite_mode, 3d
-  Overwrite Mode: overwrite_mode, after clean_mode, 1d
-  Clean Mode: clean_mode, after Magic_apply, 1d
+  Overwrite Mode: active, overwrite_mode, after clean_mode, 1d
+  Clean Mode: active, clean_mode, after Magic_apply, 1d
 
   Section Rendering
   Magic Render: active, Magic_render, after Cast_render, 1d
@@ -28,14 +28,14 @@ gantt
   Conditional Render: active, conditional_render, after m1, 2d
   Collection Render: active, collection_render, after m1, 3d
   Conditional Collection Render: active, conditional_collection_render, after collection_render, 2d
-  
+
   Section Validation
   Manifest process: active, manifest_process, after m_initial, 1d
   Manifest Schema Validation: active, manifest_validation, after manifest_process, 1d
   Cycle Detection: cycle_detection, after Magic_source, 2d
 
   Section Sources
-  Template Source: done, template_source, after m_initial, 1d
+  Template Source: active, template_source, after m_initial, 1d
   File Source: file_source, after template_source, 1d
   Document Source: document_source, after file_source, 2d
   Magic Source: Magic_source, after Magic_render, 5d

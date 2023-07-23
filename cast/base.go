@@ -1,6 +1,8 @@
 package cast
 
 import (
+	"path/filepath"
+
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/file"
 	"github.com/ismtabo/magus/source"
@@ -41,6 +43,7 @@ func (c *BaseCast) Compile(ctx context.Context) ([]file.File, error) {
 		// TODO: Wrap error
 		return nil, err
 	}
-	ctx = ctx.WithCwd(dest)
-	return c.src.Compile(ctx)
+	dest = filepath.Join(ctx.Cwd(), dest)
+	ctx = ctx.WithCwd(filepath.Dir(dest))
+	return c.src.Compile(ctx, dest)
 }

@@ -7,7 +7,7 @@ import (
 )
 
 type Source interface {
-	Compile(ctx context.Context) ([]file.File, error)
+	Compile(ctx context.Context, dest string) ([]file.File, error)
 }
 
 func NewSource(source manifest.Source) Source {

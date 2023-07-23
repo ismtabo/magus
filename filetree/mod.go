@@ -10,7 +10,7 @@ import (
 	"github.com/ismtabo/magus/file"
 )
 
-func AssertNotHaveWriteConficts(ctx context.Context, files []file.File) error {
+func AssertNotHaveWriteConflicts(ctx context.Context, files []file.File) error {
 	paths := sort.StringSlice(make([]string, len(files)))
 	for i, f := range files {
 		path, err := f.Abs(ctx)

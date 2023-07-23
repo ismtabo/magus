@@ -20,12 +20,11 @@ func TestTemplateSource_Compile(t *testing.T) {
 		ctx = ctx.WithCwd("/tmp")
 		ctx = ctx.WithVariables(vars)
 		tmpl := "Hello {{ .name }}"
-		expected := []file.File{file.NewTextFile("/tmp", "Hello John")}
 
-		actual, err := source.NewTemplateSource(tmpl).Compile(ctx)
+		actual, err := source.NewTemplateSource(tmpl).Compile(ctx, "/tmp/file.txt")
 
 		assert.Nil(t, err)
-		assert.Equal(t, expected, actual)
+		assert.Equal(t, []file.File{file.NewTextFile("/tmp/file.txt", "Hello John")}, actual)
 	})
 
 	t.Run("it should return error if template is invalid", func(t *testing.T) {
@@ -35,7 +34,7 @@ func TestTemplateSource_Compile(t *testing.T) {
 		ctx = ctx.WithVariables(vars)
 		tmpl := "Hello {{ .name }"
 
-		_, actual := source.NewTemplateSource(tmpl).Compile(ctx)
+		_, actual := source.NewTemplateSource(tmpl).Compile(ctx, "/tmp/file.txt")
 
 		assert.Error(t, actual)
 	})
@@ -50,7 +49,7 @@ func TestTemplateSource_Compile(t *testing.T) {
 
 		tmpl := "Hello {{ throw }}"
 
-		result, actual := source.NewTemplateSource(tmpl).Compile(ctx)
+		result, actual := source.NewTemplateSource(tmpl).Compile(ctx, "/tmp/file.txt")
 
 		t.Log(result)
 		assert.Error(t, actual)

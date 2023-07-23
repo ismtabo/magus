@@ -1,0 +1,100 @@
+/*
+Copyright © 2023 NAME HERE <EMAIL ADDRESS>
+*/
+package cmd
+
+import (
+	"log"
+	"os"
+	"path/filepath"
+	"strings"
+
+	"github.com/benbjohnson/immutable"
+	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/domain"
+	"github.com/ismtabo/magus/manifest"
+	"github.com/lithammer/dedent"
+	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
+)
+
+var (
+	// generateCmd represents the generate command
+	generateCmd = &cobra.Command{
+		Use:   "generate [manifest]",
+		Short: "Generate files from a manifest",
+		Long: dedent.Dedent(`
+			Generate files from a manifest
+		`),
+		Example: dedent.Dedent(`
+		magus generate ./docs/examples/template-only.yaml
+
+		Will generate the following files:
+			./salute.txt
+			./salute-alice.txt
+			./salute-bob.txt
+			./salute-charlie.txt
+		`),
+		Args: cobra.ExactArgs(1),
+		RunE: runGenerate,
+	}
+	output_dir          = "."
+	dry_run             = false
+	clean               = false
+	overwrite           = false
+	variables  []string = []string{}
+)
+
+func init() {
+	rootCmd.AddCommand(generateCmd)
+	generateCmd.Flags().StringVar(&output_dir, "dir", ".", "Output directory")
+	generateCmd.Flags().BoolVar(&dry_run, "dry-run", false, "Dry run")
+	generateCmd.Flags().BoolVar(&clean, "clean", false, "Clean output directory")
+	generateCmd.Flags().BoolVarP(&overwrite, "overwrite", "w", false, "Overwrite existing files")
+	generateCmd.Flags().StringSliceVar(&variables, "var", []string{}, "Variables")
+}
+
+func runGenerate(cmd *cobra.Command, args []string) error {
+	m_file := args[0]
+	out_dir, _ := filepath.Abs(output_dir)
+
+	ctx := context.With(cmd.Context())
+	if cwd, err := os.Getwd(); err != nil {
+		return err
+	} else {
+		ctx = ctx.WithCwd(cwd)
+	}
+
+	mf := manifest.Manifest{}
+	err := manifest.Unmarshal(ctx, m_file, &mf)
+	if err != nil {
+		return err
+	}
+
+	vars := immutable.NewMapBuilder[string, any](nil)
+	for _, v := range variables {
+		segments := strings.SplitN(v, "=", 2)
+		if segments[0] == "" || segments[1] == "" {
+			return errors.Errorf("invalid variable %s", v)
+		}
+		vars.Set(segments[0], segments[1])
+	}
+	ctx = ctx.WithVariables(vars.Map())
+
+	files, err := domain.Generate(ctx, out_dir, mf, domain.GenerateOptions{
+		DryRun:    dry_run,
+		Clean:     clean,
+		Overwrite: overwrite,
+	})
+	if err != nil {
+		return err
+	}
+
+	log.Printf("Generated files %d files\n", len(files))
+	for _, f := range files {
+		path, _ := f.Rel(ctx)
+		log.Printf("File: %s\n", path)
+	}
+
+	return nil
+}

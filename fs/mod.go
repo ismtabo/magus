@@ -49,11 +49,7 @@ func ReadDir(ctx context.Context, path string) ([]file.File, error) {
 
 func WriteFiles(ctx context.Context, files []file.File) error {
 	for _, f := range files {
-		path, err := f.Abs(ctx)
-		if err != nil {
-			// TODO: Wrap error
-			return err
-		}
+		path, _ := f.Abs(ctx)
 		dir := filepath.Dir(path)
 		if err := os.MkdirAll(dir, 0755); err != nil {
 			return err

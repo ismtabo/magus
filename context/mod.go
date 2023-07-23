@@ -11,7 +11,7 @@ type Context interface {
 	Cwd() string
 	Variables() *immutable.Map[string, any]
 	Helpers() *immutable.Map[string, any]
-	WithVariables(vals *immutable.Map[string, any]) Context
+	WithVariables(vv *immutable.Map[string, any]) Context
 	WithVariable(name string, val any) Context
 	WithHelpers(helpers *immutable.Map[string, any]) Context
 	WithCwd(cwd string) Context
@@ -32,6 +32,14 @@ func New() Context {
 	}
 }
 
+func With(ctx go_context.Context) Context {
+	return &context{
+		Context:   ctx,
+		variables: immutable.NewMap[string, any](nil),
+		helpers:   immutable.NewMap[string, any](nil),
+	}
+}
+
 func (ctx *context) Cwd() string {
 	return ctx.cwd
 }
@@ -44,9 +52,18 @@ func (ctx *context) Helpers() *immutable.Map[string, any] {
 	return ctx.helpers
 }
 
-func (ctx *context) WithVariables(variables *immutable.Map[string, any]) Context {
+func (ctx *context) WithCwd(cwd string) Context {
+	return &context{
+		Context:   ctx,
+		cwd:       cwd,
+		variables: ctx.Variables(),
+		helpers:   ctx.Helpers(),
+	}
+}
+
+func (ctx *context) WithVariables(vv *immutable.Map[string, any]) Context {
 	newVars := ctx.variables
-	it := variables.Iterator()
+	it := vv.Iterator()
 	for !it.Done() {
 		k, v, _ := it.Next()
 		newVars = newVars.Set(k, v)
@@ -80,14 +97,5 @@ func (ctx *context) WithHelpers(helpers *immutable.Map[string, any]) Context {
 		cwd:       ctx.Cwd(),
 		variables: ctx.Variables(),
 		helpers:   helpers,
-	}
-}
-
-func (ctx *context) WithCwd(cwd string) Context {
-	return &context{
-		Context:   ctx,
-		cwd:       cwd,
-		variables: ctx.Variables(),
-		helpers:   ctx.Helpers(),
 	}
 }

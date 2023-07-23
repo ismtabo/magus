@@ -1,9 +1,10 @@
+$schema: "../schema/magic.json"
 version: "v1"
 name: "Instance templates"
 root: "."
 variables:
   - name: Hello
-    value: "Hello" 
+    value: "Hello"
   - name: World
     env: WORLD
   - name: Salute
@@ -15,10 +16,9 @@ casts:
     to: "./salute.md"
     from: "{{ .Salute }}!"
   conditional-cast:
-    to: "./salute-{{ lower .It }}.md"
-    from: "{{ .Salute }} {{ .It }}!"
-    each: "{{ to_json .Array }}"
-    include: "{{ .It | ne \"Bob\" }}"
+    to: "./goodbye-{{ .World | lower }}.md"
+    from: "Goodbye {{ .World }}!"
+    if: "{{ .Goodbye }}"
   repeated-cast:
     to: "./salute-{{ .It | lower }}.md"
     from: "{{ .Salute }} {{ .It }}!"

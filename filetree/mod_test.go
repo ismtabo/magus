@@ -23,7 +23,7 @@ func TestAssertNotHaveWriteConficts(t *testing.T) {
 			file.NewTextFile("baz", "foo"),
 			file.NewTextFile("qux", "foo"),
 		}
-		assert.NoError(t, filetree.AssertNotHaveWriteConficts(ctx, files))
+		assert.NoError(t, filetree.AssertNotHaveWriteConflicts(ctx, files))
 	})
 
 	t.Run("should return error if write conflict", func(t *testing.T) {
@@ -33,6 +33,6 @@ func TestAssertNotHaveWriteConficts(t *testing.T) {
 			file.NewTextFile("foo/bar/baz", "foo"),
 			file.NewTextFile("foo/bar", "foo"),
 		}
-		assert.Error(t, filetree.AssertNotHaveWriteConficts(ctx, files))
+		assert.Error(t, filetree.AssertNotHaveWriteConflicts(ctx, files))
 	})
 }
