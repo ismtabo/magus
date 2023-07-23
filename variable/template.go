@@ -5,6 +5,8 @@ import (
 	"github.com/ismtabo/magus/template"
 )
 
+var _ Variable = &TemplateVariable{}
+
 // TemplateVariable is a variable that has a value from a template.
 type TemplateVariable struct {
 	name string
@@ -26,5 +28,5 @@ func (v *TemplateVariable) Name() string {
 
 // Value returns the value of the variable.
 func (v *TemplateVariable) Value(ctx context.Context) (any, error) {
-	return v.tmpl.Compile(ctx)
+	return v.tmpl.Render(ctx)
 }

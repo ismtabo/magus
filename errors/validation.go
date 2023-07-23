@@ -1,5 +1,9 @@
 package errors
 
+import (
+	"fmt"
+)
+
 type ValidationError interface {
 	error
 }
@@ -13,7 +17,7 @@ func NewValidationError(err error) ValidationError {
 }
 
 func (e *validationError) Error() string {
-	return "validation error"
+	return fmt.Sprintf("validation error: %s", e.error)
 }
 
 func (e *validationError) Unwrap() error {

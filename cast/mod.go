@@ -36,11 +36,14 @@ func NewCast(cast manifest.Cast) Cast {
 		cond = condition.NewNegatedCondition(condition.NewTemplateCondition(cast.Unless))
 	}
 	condCast := NewConditionalCast(cond, baseCast)
-	if hasEach {
+	if !hasEach {
 		return condCast
 	}
 	each := template.NewTemplatedString(cast.Each)
-	as := cast.As
+	as := "It"
+	if cast.As != "" {
+		as = cast.As
+	}
 	var filter condition.Condition = condition.NewAllwaysTrueCondition()
 	if cast.Include != "" {
 		filter = condition.NewTemplateCondition(cast.Include)

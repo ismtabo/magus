@@ -3,13 +3,15 @@ package manifest
 // Manifest is the representation of a manifest file.
 type Manifest struct {
 	// Version is the version of the manifest.
-	Version string `json:"version" yaml:"version"`
+	Version string `yaml:"version" validate:"required"`
 	// Name is the name of the manifest.
-	Name string `json:"name" yaml:"name"`
+	Name string `yaml:"name" validate:"required"`
 	// Root is the output root dir of the manifest.
-	Root string `json:"root" yaml:"root"`
+	Root string `yaml:"root" validate:"required"`
 	// Variables is the variables of the manifest.
-	Variables Variables `json:"variables" yaml:"variables"`
+	Variables Variables `yaml:"variables" validate:"dive"`
+	// Casts is the casts of the manifest.
+	Casts Casts `yaml:"casts" validate:"dive"`
 }
 
 // Variables is the variables of the manifest.
@@ -18,13 +20,13 @@ type Variables = []Variable
 // Variable is the variable of the manifest.
 type Variable struct {
 	// Name is the name of the variable.
-	Name string `json:"name" yaml:"name"`
+	Name string `yaml:"name" validate:"required"`
 	// Value is the value of the variable.
-	Value interface{} `json:"value,omitempty" yaml:"value,omitempty"`
+	Value interface{} `yaml:"value" validate:"required_without_all=Template Env"`
 	// Template is the template of the variable.
-	Template string `json:"template,omitempty" yaml:"template,omitempty"`
+	Template string `yaml:"template" validate:"required_without_all=Value Env"`
 	// Name is the name of the environment variable.
-	Env string `json:"env,omitempty" yaml:"env,omitempty"`
+	Env string `yaml:"env" validate:"required_without_all=Value Template"`
 }
 
 // Casts is the casts of the manifest.
@@ -33,24 +35,24 @@ type Casts = map[string]Cast
 // Cast is the cast of the manifest.
 type Cast struct {
 	// To is the output path of the cast
-	To string `json:"to" yaml:"to"`
+	To string `yaml:"to" validate:"required"`
 	// From is the input source of the cast
-	From Source `json:"from" yaml:"from"`
+	From Source `yaml:"from" validate:"required"`
 	// Variables is the variables of the cast
-	Variables Variables `json:"variables" yaml:"variables"`
+	Variables Variables `yaml:"variables" validate:"dive"`
 	// If is the condition of the cast
-	If string `json:"if,omitempty" yaml:"if,omitempty"`
+	If string `yaml:"if,omitempty" validate:"excluded_with=Unless"`
 	// Unless is the negated condition of the cast
-	Unless string `json:"unless,omitempty" yaml:"unless,omitempty"`
+	Unless string `yaml:"unless,omitempty" validate:"excluded_with=If"`
 	// Each is the loop of the cast
-	Each string `json:"each,omitempty" yaml:"each,omitempty"`
+	Each string `yaml:"each,omitempty" validate:"required_with_any=As Include Omit"`
 	// As is the name of the loop variable
-	As string `json:"as,omitempty" yaml:"as,omitempty"`
+	As string `yaml:"as,omitempty"`
 	// Include is the condition of the loop
-	Include string `json:"include,omitempty" yaml:"include,omitempty"`
+	Include string `yaml:"include,omitempty" validate:"excluded_with=Omit"`
 	// Omit is the negated condition of the loop
-	Omit string `json:"exclude,omitempty" yaml:"exclude,omitempty"`
+	Omit string `yaml:"omit,omitempty" validate:"excluded_with=Include"`
 }
 
 // Source is the source of the cast.
-type Source = interface{}
+type Source = any

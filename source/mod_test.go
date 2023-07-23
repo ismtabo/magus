@@ -14,7 +14,7 @@ func TestNewSource(t *testing.T) {
 		assert.Implements(t, (*source.Source)(nil), src)
 	})
 
-	t.Run("should panic if the source is not a string", func(t *testing.T) {
+	t.Run("it should panic if the source is not a string", func(t *testing.T) {
 		assert.Panics(t, func() {
 			source.NewSource(123)
 		})

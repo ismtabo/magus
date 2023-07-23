@@ -12,6 +12,7 @@ type Context interface {
 	Variables() *immutable.Map[string, any]
 	Helpers() *immutable.Map[string, any]
 	WithVariables(vals *immutable.Map[string, any]) Context
+	WithVariable(name string, val any) Context
 	WithHelpers(helpers *immutable.Map[string, any]) Context
 	WithCwd(cwd string) Context
 }
@@ -26,7 +27,6 @@ type context struct {
 func New() Context {
 	return &context{
 		Context:   go_context.Background(),
-		cwd:       ".",
 		variables: immutable.NewMap[string, any](nil),
 		helpers:   immutable.NewMap[string, any](nil),
 	}
@@ -55,6 +55,15 @@ func (ctx *context) WithVariables(variables *immutable.Map[string, any]) Context
 		Context:   ctx,
 		cwd:       ctx.Cwd(),
 		variables: newVars,
+		helpers:   ctx.Helpers(),
+	}
+}
+
+func (ctx *context) WithVariable(name string, val any) Context {
+	return &context{
+		Context:   ctx,
+		cwd:       ctx.Cwd(),
+		variables: ctx.Variables().Set(name, val),
 		helpers:   ctx.Helpers(),
 	}
 }

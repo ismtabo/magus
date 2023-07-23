@@ -37,7 +37,7 @@ func TestConditionalCast_Compile(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.Equal(t, []file.File{
-			file.NewFile("testdata/conditional/dest", "Hello World!\n"),
+			file.NewTextFile("testdata/conditional/dest", "Hello World!\n"),
 		}, files)
 	})
 
@@ -66,6 +66,6 @@ func TestConditionalCast_Compile(t *testing.T) {
 		files, err := c.Compile(ctx)
 
 		assert.Error(t, err)
-		assert.Equal(t, []file.File{}, files)
+		assert.Nil(t, files)
 	})
 }

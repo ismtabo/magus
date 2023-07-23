@@ -36,7 +36,7 @@ func TestBaseCast_Compile(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.Equal(t, []file.File{
-			file.NewFile("testdata/base/dest", "Hello John!\n"),
+			file.NewTextFile("testdata/base/dest", "Hello John!\n"),
 		}, files)
 	})
 
@@ -54,7 +54,7 @@ func TestBaseCast_Compile(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.Equal(t, []file.File{
-			file.NewFile("root/testdata/base/dest", "Hello John!\n"),
+			file.NewTextFile("./testdata/base/dest", "Hello John!\n"),
 		}, files)
 	})
 
@@ -73,11 +73,11 @@ func TestBaseCast_Compile(t *testing.T) {
 
 		assert.NoError(t, err)
 		assert.Equal(t, []file.File{
-			file.NewFile("root/testdata/base/dest/john", "Hello John!\n"),
+			file.NewTextFile("./testdata/base/dest/john", "Hello John!\n"),
 		}, files)
 	})
 
-	t.Run("should return error if variables evaluation fails", func(t *testing.T) {
+	t.Run("it should return error if variables evaluation fails", func(t *testing.T) {
 		src := source.NewSource("Hello {{ .name }}!\n")
 		dest := template.NewTemplatedString("./testdata/base/dest/{{ .filename }}")
 		vars := []variable.Variable{
@@ -94,7 +94,7 @@ func TestBaseCast_Compile(t *testing.T) {
 		assert.Nil(t, files)
 	})
 
-	t.Run("should return error if destination evaluation fails", func(t *testing.T) {
+	t.Run("it should return error if destination evaluation fails", func(t *testing.T) {
 		src := source.NewSource("Hello {{ .name }}!\n")
 		dest := template.NewTemplatedString("./testdata/base/dest/{{ .filename }")
 		vars := []variable.Variable{

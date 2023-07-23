@@ -11,16 +11,16 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTemplateEngine_Render(t *testing.T) {
+func TestTemplatedString_Render(t *testing.T) {
 	t.Run("it should return the render of the template", func(t *testing.T) {
 		vars := immutable.NewMap[string, any](nil)
 		vars = vars.Set("name", "John")
 		ctx := context.New()
 		ctx = ctx.WithVariables(vars)
-		tmpl := "Hello {{ .name }}"
+		tmpl := template.NewTemplatedString("Hello {{ .name }}")
 		expected := "Hello John"
 
-		actual, err := template.Engine.Render(ctx, tmpl)
+		actual, err := tmpl.Render(ctx)
 
 		assert.Nil(t, err)
 		assert.Equal(t, expected, actual)
@@ -30,9 +30,9 @@ func TestTemplateEngine_Render(t *testing.T) {
 		vars := immutable.NewMap[string, any](nil)
 		ctx := context.New()
 		ctx = ctx.WithVariables(vars)
-		tmpl := "Hello {{ .name }"
+		tmpl := template.NewTemplatedString("Hello {{ .name }")
 
-		_, actual := template.Engine.Render(ctx, tmpl)
+		_, actual := tmpl.Render(ctx)
 
 		assert.Error(t, actual)
 	})
@@ -45,9 +45,9 @@ func TestTemplateEngine_Render(t *testing.T) {
 		ctx = ctx.WithVariables(vars)
 		ctx = ctx.WithHelpers(helpers)
 
-		tmpl := "Hello {{ throw }}"
+		tmpl := template.NewTemplatedString("Hello {{ throw }}")
 
-		result, actual := template.Engine.Render(ctx, tmpl)
+		result, actual := tmpl.Render(ctx)
 
 		t.Log(result)
 		assert.Error(t, actual)

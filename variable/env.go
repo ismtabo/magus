@@ -6,6 +6,8 @@ import (
 	"github.com/ismtabo/magus/context"
 )
 
+var _ Variable = &EnvironmentVariable{}
+
 // EnvironmentVariable is a variable that has a value from an environment variable.
 type EnvironmentVariable struct {
 	name string

@@ -13,17 +13,14 @@ import (
 )
 
 func TestTemplateSource_Compile(t *testing.T) {
-	t.Run("when the template is valid", func(t *testing.T) {
+	t.Run("it should return compiled file", func(t *testing.T) {
 		vars := immutable.NewMap[string, any](nil)
 		vars = vars.Set("name", "John")
 		ctx := context.New()
 		ctx = ctx.WithCwd("/tmp")
 		ctx = ctx.WithVariables(vars)
 		tmpl := "Hello {{ .name }}"
-		expected := []file.File{{
-			Path:  "/tmp",
-			Value: "Hello John",
-		}}
+		expected := []file.File{file.NewTextFile("/tmp", "Hello John")}
 
 		actual, err := source.NewTemplateSource(tmpl).Compile(ctx)
 
@@ -31,7 +28,7 @@ func TestTemplateSource_Compile(t *testing.T) {
 		assert.Equal(t, expected, actual)
 	})
 
-	t.Run("when the template is invalid", func(t *testing.T) {
+	t.Run("it should return error if template is invalid", func(t *testing.T) {
 		vars := immutable.NewMap[string, any](nil)
 		vars = vars.Set("name", "John")
 		ctx := context.New()
@@ -40,10 +37,10 @@ func TestTemplateSource_Compile(t *testing.T) {
 
 		_, actual := source.NewTemplateSource(tmpl).Compile(ctx)
 
-		assert.EqualError(t, actual, "validation error")
+		assert.Error(t, actual)
 	})
 
-	t.Run("when render fails", func(t *testing.T) {
+	t.Run("it should return error if render fails", func(t *testing.T) {
 		vars := immutable.NewMap[string, any](nil)
 		helpers := immutable.NewMap[string, any](nil)
 		helpers = helpers.Set("throw", func() (string, error) { return "", go_errors.New("error") })
@@ -56,6 +53,6 @@ func TestTemplateSource_Compile(t *testing.T) {
 		result, actual := source.NewTemplateSource(tmpl).Compile(ctx)
 
 		t.Log(result)
-		assert.EqualError(t, actual, "render error")
+		assert.Error(t, actual)
 	})
 }

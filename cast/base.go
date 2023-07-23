@@ -1,9 +1,6 @@
 package cast
 
 import (
-	"path/filepath"
-
-	"github.com/benbjohnson/immutable"
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/file"
 	"github.com/ismtabo/magus/source"
@@ -31,22 +28,19 @@ func NewBaseCast(src source.Source, dest template.TemplatedString, vars variable
 
 // Compile compiles the cast.
 func (c *BaseCast) Compile(ctx context.Context) ([]file.File, error) {
-	vars := immutable.NewMap[string, any](nil)
 	for _, v := range c.vars {
 		value, err := v.Value(ctx)
 		if err != nil {
 			// TODO: Wrap error
 			return nil, err
 		}
-		vars = vars.Set(v.Name(), value)
+		ctx = ctx.WithVariable(v.Name(), value)
 	}
-	ctx = ctx.WithVariables(vars)
-	dest, err := c.dest.Compile(ctx)
+	dest, err := c.dest.Render(ctx)
 	if err != nil {
 		// TODO: Wrap error
 		return nil, err
 	}
-	newCwd := filepath.Join(ctx.Cwd(), dest)
-	ctx = ctx.WithCwd(newCwd)
+	ctx = ctx.WithCwd(dest)
 	return c.src.Compile(ctx)
 }

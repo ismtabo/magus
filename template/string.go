@@ -12,6 +12,6 @@ func NewTemplatedString(str string) TemplatedString {
 	return TemplatedString{str}
 }
 
-func (s TemplatedString) Compile(ctx context.Context) (string, error) {
+func (s TemplatedString) Render(ctx context.Context) (string, error) {
 	return Engine.Render(ctx, s.string)
 }

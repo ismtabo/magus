@@ -23,8 +23,7 @@ func (s *templateSource) Compile(ctx context.Context) ([]file.File, error) {
 	if err != nil {
 		return []file.File{}, err
 	}
-	return []file.File{{
-		Path:  ctx.Cwd(),
-		Value: value,
-	}}, nil
+	return []file.File{
+		file.NewTextFile(ctx.Cwd(), value),
+	}, nil
 }

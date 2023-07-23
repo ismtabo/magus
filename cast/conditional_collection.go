@@ -25,7 +25,7 @@ func NewConditionalCollectionCast(condCast *ConditionalCast, collCast *Collectio
 func (c *ConditionalCollectionCast) Compile(ctx context.Context) ([]file.File, error) {
 	val, err := c.cond.Evaluate(ctx)
 	if err != nil {
-		return []file.File{}, err
+		return nil, err
 	}
 	if !val {
 		return []file.File{}, nil

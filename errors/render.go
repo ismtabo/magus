@@ -1,5 +1,7 @@
 package errors
 
+import "fmt"
+
 type RenderError interface {
 	error
 }
@@ -13,7 +15,7 @@ func NewRenderError(err error) RenderError {
 }
 
 func (e *renderError) Error() string {
-	return "render error"
+	return fmt.Sprintf("render error: %s", e.error)
 }
 
 func (e *renderError) Unwrap() error {

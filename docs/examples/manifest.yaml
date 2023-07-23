@@ -54,12 +54,12 @@ casts: # prints represents a collection of templates render process
   iterable-cast:
     to: "./outfile-{{ .It.Name }}.md"
     from: "Hello {{ .It.Name }}!"
-    each: "{{ .Array }}" # String template that renders to JSON compatible string. To be later evaluated as Iterable
+    each: "{{ .Array }}" # String template that renders to JSON Array, to be later evaluated as Iterable
   iterable-cast-with-as:
     to: "./salute-to-{{ .Item.Name }}.md"
     from: "Hello {{ .Item.Name }}!"
     each: "{{ .Array }}"
-    as: Item # (optional) name of elements name in context (default: It). Object/Map are passed as entries
+    as: Item # (optional) name of elements name in context (default: It)
   iterable-cast-with-include:
     to: "./salute-to-{{ .It.Name }}.md"
     from: "Hello {{ .It.Name }}!"

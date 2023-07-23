@@ -2,7 +2,6 @@ package cast
 
 import (
 	"encoding/json"
-	"path/filepath"
 
 	go_errors "errors"
 
@@ -35,46 +34,36 @@ func NewCollectionCast(coll template.TemplatedString, alias string, filter condi
 
 // Compile compiles the cast.
 func (c *CollectionCast) Compile(ctx context.Context) ([]file.File, error) {
-	coll, err := c.collection.Compile(ctx)
+	coll, err := c.collection.Render(ctx)
 	if err != nil {
 		return nil, err
 	}
-	res, ok := c.UnmarshalSlice(coll)
+	res, ok := c.unmarshalSlice(coll)
 	if !ok {
 		return nil, errors.NewValidationError(go_errors.New("collection is not a valid JSON array"))
 	}
 	files := []file.File{}
 	for _, item := range res {
-		ctx = ctx.WithVariables(ctx.Variables().Set(c.alias, item))
-		dest, err := c.baseCast.dest.Compile(ctx)
+		itFiles, err := c.compileItem(ctx, item)
 		if err != nil {
-			// TODO: Wrap error
 			return nil, err
 		}
-		newCwd, err := filepath.Rel(ctx.Cwd(), dest)
-		if err != nil {
-			// TODO: Wrap error
-			return nil, err
-		}
-		ctx = ctx.WithCwd(newCwd)
-		if ok, err := c.filter.Evaluate(ctx); err != nil {
-			// TODO: Wrap error
-			return nil, err
-		} else if ok {
-			continue
-		} else {
-			val, err := c.baseCast.Compile(ctx)
-			if err != nil {
-				// TODO: Wrap error
-				return nil, err
-			}
-			files = append(files, val...)
-		}
+		files = append(files, itFiles...)
 	}
 	return files, nil
 }
 
-func (c *CollectionCast) UnmarshalSlice(coll string) ([]any, bool) {
+func (c *CollectionCast) compileItem(ctx context.Context, item any) ([]file.File, error) {
+	ctx = ctx.WithVariable(c.alias, item)
+	if ok, err := c.filter.Evaluate(ctx); err != nil {
+		return nil, err
+	} else if !ok {
+		return []file.File{}, nil
+	}
+	return c.baseCast.Compile(ctx)
+}
+
+func (c *CollectionCast) unmarshalSlice(coll string) ([]any, bool) {
 	var res []any
 	err := json.Unmarshal([]byte(coll), &res)
 	if err != nil {

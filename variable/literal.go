@@ -2,6 +2,8 @@ package variable
 
 import "github.com/ismtabo/magus/context"
 
+var _ Variable = &LiteralVariable{}
+
 // LiteralVariable is a variable that has a literal value.
 type LiteralVariable struct {
 	name  string
