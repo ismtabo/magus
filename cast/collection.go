@@ -43,8 +43,12 @@ func (c *CollectionCast) Compile(ctx context.Context) ([]file.File, error) {
 		return nil, errors.NewValidationError(go_errors.New("collection is not a valid JSON array"))
 	}
 	files := []file.File{}
-	for _, item := range res {
-		itFiles, err := c.compileItem(ctx, item)
+	for idx, value := range res {
+		iterCtx := ctx.WithVariable(c.alias, value)
+		iterCtx = iterCtx.WithVariable("Index", idx)
+		iterCtx = iterCtx.WithVariable("First", idx == 0)
+		iterCtx = iterCtx.WithVariable("Last", idx == len(res)-1)
+		itFiles, err := c.compileItem(iterCtx)
 		if err != nil {
 			return nil, err
 		}
@@ -53,8 +57,7 @@ func (c *CollectionCast) Compile(ctx context.Context) ([]file.File, error) {
 	return files, nil
 }
 
-func (c *CollectionCast) compileItem(ctx context.Context, item any) ([]file.File, error) {
-	ctx = ctx.WithVariable(c.alias, item)
+func (c *CollectionCast) compileItem(ctx context.Context) ([]file.File, error) {
 	if ok, err := c.filter.Evaluate(ctx); err != nil {
 		return nil, err
 	} else if !ok {

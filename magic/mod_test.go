@@ -58,7 +58,7 @@ func TestFromManifest(t *testing.T) {
 		m := magic.FromManifest(mf)
 
 		assert.Equal(t, magic.NewMagic("1.0.0", "test", []variable.Variable{}, []cast.Cast{
-			cast.NewBaseCast(source.NewTemplateSource("from"), template.NewTemplatedString("to"), variable.Variables{}),
+			cast.NewBaseCast(source.NewTemplateSource("from"), template.NewTemplatedPath("to"), variable.Variables{}),
 		}), m)
 	})
 }

@@ -20,15 +20,24 @@ func ReadFile(ctx context.Context, path string) (file.File, error) {
 	return file.NewFile(path, data), nil
 }
 
-func ReadDir(ctx context.Context, path string) ([]file.File, error) {
+type ReadDirOptions struct {
+	NoFailOnMissing bool
+}
+
+func ReadDir(ctx context.Context, path string, opts ReadDirOptions) ([]file.File, error) {
 	files, err := os.ReadDir(path)
 	if err != nil {
+		if os.IsNotExist(err) && opts.NoFailOnMissing {
+			return []file.File{}, nil
+		}
 		return nil, err
 	}
+	// NOTE: options are not propagated to recursive calls
+	opts = ReadDirOptions{}
 	var result []file.File
 	for _, f := range files {
 		if f.IsDir() {
-			files, err := ReadDir(ctx, filepath.Join(path, f.Name()))
+			files, err := ReadDir(ctx, filepath.Join(path, f.Name()), opts)
 			if err != nil {
 				// TODO: Wrap error
 				return nil, err

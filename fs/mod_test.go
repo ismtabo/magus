@@ -64,8 +64,9 @@ func TestReadDir(t *testing.T) {
 		if err := os.WriteFile(p2, []byte("Hello, World!"), 0644); err != nil {
 			t.Fatal(err)
 		}
+		opts := fs.ReadDirOptions{}
 
-		files, err := fs.ReadDir(ctx, dir)
+		files, err := fs.ReadDir(ctx, dir, opts)
 
 		assert.NoError(t, err)
 		assert.Len(t, files, 2)
@@ -73,11 +74,25 @@ func TestReadDir(t *testing.T) {
 		assert.Equal(t, p2, files[1].Path())
 	})
 
+	t.Run("should return an empty list if the directory does not exist and option NoFailOnMissing is true", func(t *testing.T) {
+		ctx := context.New()
+		p := filepath.Join(t.TempDir(), "dir")
+		opts := fs.ReadDirOptions{
+			NoFailOnMissing: true,
+		}
+
+		files, err := fs.ReadDir(ctx, p, opts)
+
+		assert.NoError(t, err)
+		assert.Empty(t, files)
+	})
+
 	t.Run("should return an error if the directory does not exist", func(t *testing.T) {
 		ctx := context.New()
 		p := filepath.Join(t.TempDir(), "dir")
+		opts := fs.ReadDirOptions{}
 
-		_, err := fs.ReadDir(ctx, p)
+		_, err := fs.ReadDir(ctx, p, opts)
 
 		assert.Error(t, err)
 	})
@@ -88,8 +103,9 @@ func TestReadDir(t *testing.T) {
 		if err := os.WriteFile(p, []byte("Hello World!"), 0755); err != nil {
 			t.Fatal(err)
 		}
+		opts := fs.ReadDirOptions{}
 
-		_, err := fs.ReadDir(ctx, p)
+		_, err := fs.ReadDir(ctx, p, opts)
 
 		assert.Error(t, err)
 	})

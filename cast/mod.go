@@ -18,7 +18,7 @@ type Cast interface {
 
 // NewCast creates a new cast from a manifest cast.
 func NewCast(cast manifest.Cast) Cast {
-	dest := template.NewTemplatedString(cast.To)
+	dest := template.NewTemplatedPath(cast.To)
 	src := source.NewSource(cast.From)
 	vars := variable.NewVariables(cast.Variables)
 	hasCond := cast.If != "" || cast.Unless != ""
@@ -28,7 +28,7 @@ func NewCast(cast manifest.Cast) Cast {
 	if !hasEitherCondOrEach {
 		return baseCast
 	}
-	var cond condition.Condition = condition.NewAllwaysTrueCondition()
+	var cond condition.Condition = condition.NewAlwaysTrueCondition()
 	if cast.If != "" {
 		cond = condition.NewTemplateCondition(cast.If)
 	}
@@ -44,7 +44,7 @@ func NewCast(cast manifest.Cast) Cast {
 	if cast.As != "" {
 		as = cast.As
 	}
-	var filter condition.Condition = condition.NewAllwaysTrueCondition()
+	var filter condition.Condition = condition.NewAlwaysTrueCondition()
 	if cast.Include != "" {
 		filter = condition.NewTemplateCondition(cast.Include)
 	}

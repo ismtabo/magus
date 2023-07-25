@@ -17,7 +17,7 @@ func TestMagic_Render(t *testing.T) {
 	t.Run("should render a magic", func(t *testing.T) {
 		m := magic.NewMagic("1.0.0", "test", []variable.Variable{}, []cast.Cast{})
 
-		files, err := m.Render(context.New())
+		files, err := m.Render(context.New(), magic.MagicRenderOptions{})
 
 		assert.NoError(t, err)
 		assert.Equal(t, files, []file.File{})
@@ -28,7 +28,7 @@ func TestMagic_Render(t *testing.T) {
 			variable.NewLiteralVariable("name", "John Doe"),
 		}, []cast.Cast{})
 
-		files, err := m.Render(context.New())
+		files, err := m.Render(context.New(), magic.MagicRenderOptions{})
 
 		assert.NoError(t, err)
 		assert.Equal(t, files, []file.File{})
@@ -36,10 +36,10 @@ func TestMagic_Render(t *testing.T) {
 
 	t.Run("should render a magic with casts", func(t *testing.T) {
 		m := magic.NewMagic("1.0.0", "test", []variable.Variable{}, []cast.Cast{
-			cast.NewBaseCast(source.NewTemplateSource("test"), template.NewTemplatedString("test"), variable.Variables{}),
+			cast.NewBaseCast(source.NewTemplateSource("test"), template.NewTemplatedPath("test"), variable.Variables{}),
 		})
 
-		files, err := m.Render(context.New())
+		files, err := m.Render(context.New(), magic.MagicRenderOptions{})
 
 		assert.NoError(t, err)
 		assert.Equal(t, []file.File{
@@ -51,9 +51,9 @@ func TestMagic_Render(t *testing.T) {
 		m := magic.NewMagic("1.0.0", "test", []variable.Variable{
 			variable.NewLiteralVariable("name", "John Doe"),
 		}, []cast.Cast{
-			cast.NewBaseCast(source.NewTemplateSource("{{ .name }}"), template.NewTemplatedString("test"), variable.Variables{}),
+			cast.NewBaseCast(source.NewTemplateSource("{{ .name }}"), template.NewTemplatedPath("test"), variable.Variables{}),
 		})
-		files, err := m.Render(context.New())
+		files, err := m.Render(context.New(), magic.MagicRenderOptions{})
 
 		assert.NoError(t, err)
 		assert.Equal(t, []file.File{
@@ -66,17 +66,17 @@ func TestMagic_Render(t *testing.T) {
 			variable.NewTemplateVariable("age", "{{ .name }"),
 		}, []cast.Cast{})
 
-		_, err := m.Render(context.New())
+		_, err := m.Render(context.New(), magic.MagicRenderOptions{})
 
 		assert.Error(t, err)
 	})
 
 	t.Run("should return an error if a cast fails to render", func(t *testing.T) {
 		m := magic.NewMagic("1.0.0", "test", []variable.Variable{}, []cast.Cast{
-			cast.NewBaseCast(source.NewTemplateSource("{{ .name }"), template.NewTemplatedString("test"), variable.Variables{}),
+			cast.NewBaseCast(source.NewTemplateSource("{{ .name }"), template.NewTemplatedPath("test"), variable.Variables{}),
 		})
 
-		_, err := m.Render(context.New())
+		_, err := m.Render(context.New(), magic.MagicRenderOptions{})
 
 		assert.Error(t, err)
 	})

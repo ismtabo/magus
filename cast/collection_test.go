@@ -16,12 +16,12 @@ import (
 func TestCollection_Compile(t *testing.T) {
 	t.Run("it should return an error if the collection fails to compile", func(t *testing.T) {
 		src := source.NewTemplateSource("Hello World!")
-		dest := template.NewTemplatedString("path/to/dest")
+		dest := template.NewTemplatedPath("path/to/dest")
 		vars := variable.Variables{}
 		baseCast := cast.NewBaseCast(src, dest, vars)
 		coll := template.NewTemplatedString("{{ .It }")
 		alias := "It"
-		filter := condition.NewAllwaysTrueCondition()
+		filter := condition.NewAlwaysTrueCondition()
 		c := cast.NewCollectionCast(coll, alias, filter, baseCast)
 		ctx := context.New()
 
@@ -32,12 +32,12 @@ func TestCollection_Compile(t *testing.T) {
 
 	t.Run("it should return an error if the collection is not a valid JSON array", func(t *testing.T) {
 		src := source.NewTemplateSource("Hello World!")
-		dest := template.NewTemplatedString("path/to/dest")
+		dest := template.NewTemplatedPath("path/to/dest")
 		vars := variable.Variables{}
 		baseCast := cast.NewBaseCast(src, dest, vars)
 		coll := template.NewTemplatedString("Hello World!")
 		alias := "It"
-		filter := condition.NewAllwaysTrueCondition()
+		filter := condition.NewAlwaysTrueCondition()
 		c := cast.NewCollectionCast(coll, alias, filter, baseCast)
 		ctx := context.New()
 
@@ -48,12 +48,12 @@ func TestCollection_Compile(t *testing.T) {
 
 	t.Run("it should return the rendered files for the collection", func(t *testing.T) {
 		src := source.NewTemplateSource("Hello {{ .It }}!")
-		dest := template.NewTemplatedString("path/to/dest/{{ .It }}")
+		dest := template.NewTemplatedPath("path/to/dest/{{ .It }}")
 		vars := variable.Variables{}
 		baseCast := cast.NewBaseCast(src, dest, vars)
 		coll := template.NewTemplatedString(`["harry", "ron", "hermione"]`)
 		alias := "It"
-		filter := condition.NewAllwaysTrueCondition()
+		filter := condition.NewAlwaysTrueCondition()
 		c := cast.NewCollectionCast(coll, alias, filter, baseCast)
 		ctx := context.New()
 
@@ -69,7 +69,7 @@ func TestCollection_Compile(t *testing.T) {
 
 	t.Run("it should return an error if the filter fails to evaluate", func(t *testing.T) {
 		src := source.NewTemplateSource("Hello World!")
-		dest := template.NewTemplatedString("path/to/dest")
+		dest := template.NewTemplatedPath("path/to/dest")
 		vars := variable.Variables{}
 		baseCast := cast.NewBaseCast(src, dest, vars)
 		coll := template.NewTemplatedString(`["harry", "ron", "hermione"]`)
@@ -85,12 +85,12 @@ func TestCollection_Compile(t *testing.T) {
 
 	t.Run("it should return the rendered files for the collection if the filter is true", func(t *testing.T) {
 		src := source.NewTemplateSource("Hello {{ .It }}!")
-		dest := template.NewTemplatedString("path/to/dest/{{ .It }}")
+		dest := template.NewTemplatedPath("path/to/dest/{{ .It }}")
 		vars := variable.Variables{}
 		baseCast := cast.NewBaseCast(src, dest, vars)
 		coll := template.NewTemplatedString(`["harry", "ron", "hermione"]`)
 		alias := "It"
-		filter := condition.NewAllwaysTrueCondition()
+		filter := condition.NewAlwaysTrueCondition()
 		c := cast.NewCollectionCast(coll, alias, filter, baseCast)
 		ctx := context.New()
 
@@ -106,12 +106,12 @@ func TestCollection_Compile(t *testing.T) {
 
 	t.Run("it should return an empty list of files if the filter is false", func(t *testing.T) {
 		src := source.NewTemplateSource("Hello {{ .It }}!")
-		dest := template.NewTemplatedString("path/to/dest/{{ .It }}")
+		dest := template.NewTemplatedPath("path/to/dest/{{ .It }}")
 		vars := variable.Variables{}
 		baseCast := cast.NewBaseCast(src, dest, vars)
 		coll := template.NewTemplatedString(`["harry", "ron", "hermione"]`)
 		alias := "It"
-		filter := condition.NewNegatedCondition(condition.NewAllwaysTrueCondition())
+		filter := condition.NewNegatedCondition(condition.NewAlwaysTrueCondition())
 		c := cast.NewCollectionCast(coll, alias, filter, baseCast)
 		ctx := context.New()
 

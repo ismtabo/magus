@@ -2,15 +2,15 @@ package condition
 
 import "github.com/ismtabo/magus/context"
 
-// AllwaysTrueCondition is a condition that allways evaluates to true.
-type AllwaysTrueCondition struct{}
+// AlwaysTrueCondition is a condition that allways evaluates to true.
+type AlwaysTrueCondition struct{}
 
-// NewAllwaysTrueCondition creates a new condition that allways evaluates to true.
-func NewAllwaysTrueCondition() *AllwaysTrueCondition {
-	return &AllwaysTrueCondition{}
+// NewAlwaysTrueCondition creates a new condition that allways evaluates to true.
+func NewAlwaysTrueCondition() *AlwaysTrueCondition {
+	return &AlwaysTrueCondition{}
 }
 
 // Evaluate evaluates the condition.
-func (c *AllwaysTrueCondition) Evaluate(ctx context.Context) (bool, error) {
+func (c *AlwaysTrueCondition) Evaluate(ctx context.Context) (bool, error) {
 	return true, nil
 }

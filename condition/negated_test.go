@@ -21,7 +21,7 @@ func NewFailingCondition() condition.Condition {
 
 func TestNegatedCondition_Evaluate(t *testing.T) {
 	t.Run("it should return the negated result of the condition", func(t *testing.T) {
-		c := condition.NewNegatedCondition(condition.NewAllwaysTrueCondition())
+		c := condition.NewNegatedCondition(condition.NewAlwaysTrueCondition())
 		ctx := context.New()
 
 		result, err := c.Evaluate(ctx)

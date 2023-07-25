@@ -21,6 +21,7 @@ var default_funcs = template.FuncMap{
 	"pascal":   strcase.ToCamel,
 	"camel":    strcase.ToLowerCamel,
 	"kebab":    strcase.ToKebab,
+	"title":    strings.ToTitle,
 	"to_json":  ToJson,
 }
 

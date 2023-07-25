@@ -15,12 +15,12 @@ var _ Cast = (*BaseCast)(nil)
 // BaseCast is a cast that renders files from a source to a destination.
 type BaseCast struct {
 	src  source.Source
-	dest template.TemplatedString
+	dest template.TemplatedPath
 	vars variable.Variables
 }
 
 // NewBaseCast creates a new base cast.
-func NewBaseCast(src source.Source, dest template.TemplatedString, vars variable.Variables) *BaseCast {
+func NewBaseCast(src source.Source, dest template.TemplatedPath, vars variable.Variables) *BaseCast {
 	return &BaseCast{
 		src:  src,
 		dest: dest,

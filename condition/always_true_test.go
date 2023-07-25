@@ -10,7 +10,7 @@ import (
 
 func TestAlwaysTrueCondition_Evaluate(t *testing.T) {
 	t.Run("it should always return true", func(t *testing.T) {
-		c := condition.NewAllwaysTrueCondition()
+		c := condition.NewAlwaysTrueCondition()
 		ctx := context.New()
 
 		result, err := c.Evaluate(ctx)

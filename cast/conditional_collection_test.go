@@ -16,14 +16,14 @@ import (
 func TestConditionalCollectionCast_Compile(t *testing.T) {
 	t.Run("it should return an empty list of files if the condition is false", func(t *testing.T) {
 		src := source.NewTemplateSource("Hello World!")
-		dest := template.NewTemplatedString("path/to/dest")
+		dest := template.NewTemplatedPath("path/to/dest")
 		vars := variable.Variables{}
 		baseCast := cast.NewBaseCast(src, dest, vars)
-		cond := condition.NewNegatedCondition(condition.NewAllwaysTrueCondition())
+		cond := condition.NewNegatedCondition(condition.NewAlwaysTrueCondition())
 		condCast := cast.NewConditionalCast(cond, baseCast)
 		coll := template.NewTemplatedString("[1, 2, 3]")
 		alias := "It"
-		filter := condition.NewAllwaysTrueCondition()
+		filter := condition.NewAlwaysTrueCondition()
 		collCast := cast.NewCollectionCast(coll, alias, filter, baseCast)
 		c := cast.NewConditionalCollectionCast(condCast, collCast)
 		ctx := context.New()
@@ -36,14 +36,14 @@ func TestConditionalCollectionCast_Compile(t *testing.T) {
 
 	t.Run("it should return the collection if the condition is true", func(t *testing.T) {
 		src := source.NewTemplateSource("Hello {{ .It }}!")
-		dest := template.NewTemplatedString("path/to/dest/{{ .It }}")
+		dest := template.NewTemplatedPath("path/to/dest/{{ .It }}")
 		vars := variable.Variables{}
 		baseCast := cast.NewBaseCast(src, dest, vars)
-		cond := condition.NewAllwaysTrueCondition()
+		cond := condition.NewAlwaysTrueCondition()
 		condCast := cast.NewConditionalCast(cond, baseCast)
 		coll := template.NewTemplatedString(`["harry", "ron", "hermione"]`)
 		alias := "It"
-		filter := condition.NewAllwaysTrueCondition()
+		filter := condition.NewAlwaysTrueCondition()
 		collCast := cast.NewCollectionCast(coll, alias, filter, baseCast)
 		c := cast.NewConditionalCollectionCast(condCast, collCast)
 		ctx := context.New()
@@ -60,14 +60,14 @@ func TestConditionalCollectionCast_Compile(t *testing.T) {
 
 	t.Run("it should return an error if the condition cast returns an error", func(t *testing.T) {
 		src := source.NewTemplateSource("Hello World!")
-		dest := template.NewTemplatedString("path/to/dest")
+		dest := template.NewTemplatedPath("path/to/dest")
 		vars := variable.Variables{}
 		baseCast := cast.NewBaseCast(src, dest, vars)
 		cond := NewFailingCondition()
 		condCast := cast.NewConditionalCast(cond, baseCast)
 		coll := template.NewTemplatedString("[1, 2, 3]")
 		alias := "It"
-		filter := condition.NewAllwaysTrueCondition()
+		filter := condition.NewAlwaysTrueCondition()
 		collCast := cast.NewCollectionCast(coll, alias, filter, baseCast)
 		c := cast.NewConditionalCollectionCast(condCast, collCast)
 		ctx := context.New()

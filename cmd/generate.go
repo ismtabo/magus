@@ -9,10 +9,10 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/benbjohnson/immutable"
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/domain"
 	"github.com/ismtabo/magus/manifest"
+	"github.com/ismtabo/magus/variable"
 	"github.com/lithammer/dedent"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -38,11 +38,12 @@ var (
 		Args: cobra.ExactArgs(1),
 		RunE: runGenerate,
 	}
-	output_dir          = "."
-	dry_run             = false
-	clean               = false
-	overwrite           = false
-	variables  []string = []string{}
+	output_dir              = "."
+	dry_run                 = false
+	clean                   = false
+	overwrite               = false
+	variables      []string = []string{}
+	variablesFiles []string = []string{}
 )
 
 func init() {
@@ -51,7 +52,8 @@ func init() {
 	generateCmd.Flags().BoolVar(&dry_run, "dry-run", false, "Dry run")
 	generateCmd.Flags().BoolVar(&clean, "clean", false, "Clean output directory")
 	generateCmd.Flags().BoolVarP(&overwrite, "overwrite", "w", false, "Overwrite existing files")
-	generateCmd.Flags().StringSliceVar(&variables, "var", []string{}, "Variables")
+	generateCmd.Flags().StringSliceVar(&variables, "var", []string{}, `Comma separated variables (e.g. '--var foo=bar' or '--var foo=bar,baz=qux')`)
+	generateCmd.Flags().StringSliceVar(&variablesFiles, "var-file", []string{}, `Comma separated variables files (e.g. '--var-file ./foo.yaml' or '--var-file ./foo.yaml,./bar.yaml')`)
 }
 
 func runGenerate(cmd *cobra.Command, args []string) error {
@@ -71,20 +73,27 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	vars := immutable.NewMapBuilder[string, any](nil)
+	vars := variable.Variables{}
 	for _, v := range variables {
 		segments := strings.SplitN(v, "=", 2)
 		if segments[0] == "" || segments[1] == "" {
 			return errors.Errorf("invalid variable %s", v)
 		}
-		vars.Set(segments[0], segments[1])
+		vars = append(vars, variable.NewLiteralVariable(segments[0], segments[1]))
 	}
-	ctx = ctx.WithVariables(vars.Map())
+	for _, f := range variablesFiles {
+		fileVars, err := variable.FromFile(ctx, f)
+		if err != nil {
+			return err
+		}
+		vars = append(vars, fileVars...)
+	}
 
 	files, err := domain.Generate(ctx, out_dir, mf, domain.GenerateOptions{
 		DryRun:    dry_run,
 		Clean:     clean,
 		Overwrite: overwrite,
+		Variables: vars,
 	})
 	if err != nil {
 		return err

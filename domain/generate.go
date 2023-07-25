@@ -10,6 +10,7 @@ import (
 	"github.com/ismtabo/magus/fs"
 	"github.com/ismtabo/magus/magic"
 	"github.com/ismtabo/magus/manifest"
+	"github.com/ismtabo/magus/variable"
 	"github.com/samber/lo"
 )
 
@@ -17,13 +18,16 @@ type GenerateOptions struct {
 	DryRun    bool
 	Overwrite bool
 	Clean     bool
+	Variables variable.Variables
 }
 
 func Generate(ctx context.Context, dest string, mfst manifest.Manifest, opts GenerateOptions) ([]file.File, error) {
 	ctx = ctx.WithCwd(filepath.Join(ctx.Cwd(), mfst.Root))
 	mgc := magic.FromManifest(mfst)
 
-	files, err := mgc.Render(ctx.WithCwd(dest))
+	files, err := mgc.Render(ctx.WithCwd(dest), magic.MagicRenderOptions{
+		Variables: opts.Variables,
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +39,9 @@ func Generate(ctx context.Context, dest string, mfst manifest.Manifest, opts Gen
 	if !opts.Overwrite && !opts.Clean {
 		var err error
 		existent_files := []file.File{}
-		if existent_files, err = fs.ReadDir(ctx, dest); err != nil {
+		if existent_files, err = fs.ReadDir(ctx, dest, fs.ReadDirOptions{
+			NoFailOnMissing: true,
+		}); err != nil {
 			return nil, err
 		}
 		files = lo.Filter[file.File](files, func(item file.File, index int) bool {
