@@ -27,6 +27,7 @@ magus generate [manifest] --dir output
 - `--overwrite,-w`: whether to overwrite existing files or not. Defaults to `false`.
 - `--clean`: whether to clean the output directory before generating the magic source file or not. Defaults to `false`.
 - `--var`: list of variables to be used in the manifest. This flag can be used multiple times. E.g: `--var name=foo --var version=1.0.0`.
+- `--var-files`: list of files containing variables to be used in the manifest. This flag can be used multiple times. E.g: `--var-files ./vars.yaml --var-files ./vars.json`.
 
 ## Manifest
 
