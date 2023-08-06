@@ -24,6 +24,14 @@ vars:
     CHANGELOG.md
   DATE: "{{now | date `2006-01-02T15:04+00:00`}}"
 
+includes:
+  docs:
+    taskfile: docs/Taskfile.dist.yaml
+    dir: docs/
+  scripts:
+    taskfile: scripts/Taskfile.dist.yaml
+    dir: scripts/
+
 tasks:
   build-target:
     desc: Build target OS binary
@@ -96,8 +104,9 @@ tasks:
       - task: clean
       - task: build
     cmds:
-      - gh release create ${VERSION} -F ${CHANGELOG} ${TARGET_DIR}/*
-includes:
-  docs: 
-    taskfile: docs/Taskfile.dist.yaml
-    dir: docs/
+      - gh release create {{.VERSION}} -F {{.CHANGELOG}} {{.TARGET_DIR}}/*
+    requires:
+      vars:
+        - VERSION
+        - CHANGELOG
+        - TARGET_DIR

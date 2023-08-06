@@ -1,0 +1,29 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "changelog": "node ./changelog.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@caporal/core": "2.0.2",
+    "dayjs": "1.11.9",
+    "remark": "14.0.3",
+    "remark-gfm": "3.0.1",
+    "semver": "7.5.4",
+    "to-vfile": "8.0.0",
+    "ts-dedent": "2.2.0",
+    "unist-util-find": "2.0.0",
+    "unist-util-find-after": "5.0.0",
+    "unist-util-find-all-after": "5.0.0",
+    "unist-util-find-all-between": "2.1.0",
+    "unist-util-is": "6.0.0",
+    "unist-util-remove": "4.0.0",
+    "unist-util-visit": "5.0.0",
+    "vfile-reporter": "8.0.0"
+  }
+}

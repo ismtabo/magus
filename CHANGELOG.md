@@ -8,13 +8,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
-* feat: initial version of the project
-* feat: add generate command to render files based on manifest
-* feat: add support for templates
-* feat: add support for helpers
-* feat: add support for casts
-* feat: add validation of manifest
-
 ### Changed
 
 ### Deprecated
@@ -24,3 +17,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Fixed
 
 ### Security
+
+## [1.0.0] - (2023-08-06)
+
+### Added
+
+*   feat: initial version of the project
+*   feat: add generate command to render files based on manifest
+*   feat: add support for templates
+*   feat: add support for helpers
+*   feat: add support for casts
+*   feat: add validation of manifest
