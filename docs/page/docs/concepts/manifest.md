@@ -38,6 +38,12 @@ Variables are used to provide data for cast generation. They can be used in the 
 
 Casts are used to describe what should be generated. Casts are defined as a map of cast objects, they represent the source of the template to generate and where to generate the cast. They have additional feature such as conditional rendering and rendering over collections. Further information about casts can be found in the [Cast](./casts.md) section.
 
+:::caution
+
+**Caveat:** Magus will not apply the manifest if there is a conflict between destinations of multiples casts. For example, if you have two casts that generate the same file, Magus will show an error warning about the conflict. In case of existing files, Magus can override them using the `--clean` or `--overwrite` flags. See more at the [Generate command](/docs/generate) page.
+
+:::
+
 ## Example
 
 ```yaml
