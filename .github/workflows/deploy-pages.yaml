@@ -2,12 +2,13 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches:
+      - main
+    paths:
+      - "docs/page/**"
   workflow_dispatch:
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     steps:
