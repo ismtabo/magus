@@ -31,9 +31,8 @@ jobs:
       run: |
         task docs:page:build
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-pages-artifact@v2
       with:
-        name: github-pages
         path: docs/page/build/
   deploy:
     runs-on: ubuntu-latest
