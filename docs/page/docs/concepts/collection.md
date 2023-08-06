@@ -5,18 +5,31 @@ description: "Render a cast multiple times"
 
 # Collection Casts
 
-You can render a cast multiple times using the `each` property. The `each` property is a [Go template](https://pkg.go.dev/text/template) that is evaluated with the cast variables. The result of the template should be a list of objects represented as a JSON array. Each object in the list is used to render the cast. The object is passed to the cast as a variable. The variable name is `It` by default, but it can be overridden using the `as` property. The function `toJson` can be used to convert a string to a JSON object.
-
-## Item Alias
-
-You can override the default `It` variable name using the `as` property. For example, the following cast renders a list of users:
+You can render a cast multiple times using the `each` property. The `each` property is a [Go template](https://pkg.go.dev/text/template) that is evaluated with the cast variables. The result of the template **MUST** be a string representing a **JSON array**. Each element in the list is used to render the cast, and its value is passed to the context of the render as the `It` variable named. For example, the following cast renders a list of users:
 
 ```yaml
 casts:
   users:
-    to: ./users
+    to: ./users-{{ .It.name }}.txt
     from: |
       {{ .It.name }} is {{ .It.age }} years old.
+    each: |
+      [
+        { "name": "John", "age": 30 },
+        { "name": "Jane", "age": 25 }
+      ]
+```
+
+## Item Alias
+
+You can override the default `It` variable name using the `as` property.
+
+```yaml
+casts:
+  users:
+    to: ./users-{{ .user.name }}.txt
+    from: |
+      {{ .user.name }} is {{ .user.age }} years old.
     each: |
       [
         { "name": "John", "age": 30 },
@@ -38,7 +51,7 @@ For example, the following cast renders a list of users:
 ```yaml
 casts:
   users:
-    to: ./users
+    to: ./users-{{ .Index }}.txt
     from: |
       {{ .It.name }} is {{ .It.age }} years old.
     each: |
@@ -46,7 +59,6 @@ casts:
         { "name": "John", "age": 30 },
         { "name": "Jane", "age": 25 }
       ]
-    as: user
 ```
 
 ## Conditional Item Rendering
@@ -78,7 +90,6 @@ casts:
         { "name": "John", "age": 30 },
         { "name": "Jane", "age": 25 }
       ]
-    as: user
     include: |
       {{ .It.age > 25 }}
 ```
@@ -101,7 +112,6 @@ casts:
         { "name": "John", "age": 30 },
         { "name": "Jane", "age": 25 }
       ]
-    as: user
     if: |
       {{ .renderUsers }}
 ```
