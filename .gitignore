@@ -55,6 +55,7 @@ targets/
 ## Taskfile ##
 Taskfile.yml
 Taskfile.yaml
+.task/
 
 ## Act ##
 .actrc

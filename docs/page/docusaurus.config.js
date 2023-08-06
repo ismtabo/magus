@@ -62,8 +62,11 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      // Replace with your project's social card
-      image: 'img/docusaurus-social-card.jpg',
+      // TODO: Replace with your project's social card
+      // image: 'img/docusaurus-social-card.jpg',
+      metadata: [
+        { name: 'keywords', content: 'magus, go, golang, cli, code generation, code generator, codegen, codegen tool, codegen utility, codegen cli, codegen command line tool, codegen command line utility, codegen cli tool, codegen cli utility, codegen command line' },
+      ],
       navbar: {
         title: 'Magus',
         logo: {
@@ -127,6 +130,7 @@ const config = {
       },
     }),
   customFields: {
+    description: 'Magus is a CLI tool that generates code for your Go projects.',
     releasesPage: `https://github.com/ismtabo/magus/releases`
   }
 };
