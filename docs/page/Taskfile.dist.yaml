@@ -1,0 +1,30 @@
+version: "3"
+
+tasks:
+  install:
+    desc: Install dependencies
+    cmds:
+      - pnpm install
+  build:
+    desc: Build the application
+    cmds:
+      - pnpm run build
+    sources:
+      - src/*
+      - docs/*
+    generates:
+      - build/*
+  run:
+    desc: Run the application
+    cmds:
+      - pnpm run start
+  serve:
+    desc: Run the application in development mode
+    cmds:
+      - pnpm run serve
+    deps:
+      - build
+  clean:
+    desc: Clean target directory
+    cmds:
+      - pnpm run clear

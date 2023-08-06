@@ -44,3 +44,17 @@ go.work
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,go
+
+## Targets ##
+target/
+targets/
+
+## VS Code Workspaces ##
+*.code-workspace
+
+## Taskfile ##
+Taskfile.yml
+Taskfile.yaml
+
+## Act ##
+.actrc
