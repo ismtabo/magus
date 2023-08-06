@@ -18,6 +18,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Security
 
+## [1.0.3] - (2023-08-06)
+
+### Changed
+
+*   chore: update license name
+*   chore: remove documentation header from modules
+
 ## [1.0.2] - (2023-08-06)
 
 ### Added
