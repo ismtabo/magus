@@ -27,13 +27,27 @@ var (
 			Generate files from a manifest
 		`),
 		Example: dedent.Dedent(`
-		magus generate ./docs/examples/template-only.yaml
+		Given the following manifest at manifest.yaml:
+		  ---
+		  version: "1"
+		  name: hello-world
+		  root: .
+		  casts:
+		    hello-world:
+		      to: ./hello-world.md
+		      from: |
+		        # Hello World
+		        This is my first cast!
 
-		Will generate the following files:
-			./salute.txt
-			./salute-alice.txt
-			./salute-bob.txt
-			./salute-charlie.txt
+		When running:
+		  magus generate manifest.yaml
+
+		Then it will generate the following file:
+		  ./hello-world.md
+
+		With the content:
+		  # Hello World
+		  This is my first cast!
 		`),
 		Args: cobra.ExactArgs(1),
 		RunE: runGenerate,
