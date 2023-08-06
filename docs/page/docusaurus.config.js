@@ -3,11 +3,12 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const { default: dedent } = require('ts-dedent');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Magus',
-  tagline: 'MAgic Generator for Software',
+  tagline: 'MAgic Generator Utility for Software',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -67,7 +68,7 @@ const config = {
         title: 'Magus',
         logo: {
           alt: 'Magus Logo',
-          src: 'img/logo.svg',
+          src: 'img/sage.png',
         },
         items: [
           {
@@ -115,7 +116,10 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Ismael Taboada. Built with Docusaurus.`,
+        copyright: dedent`
+        Copyright © ${new Date().getFullYear()} Ismael Taboada. Built with Docusaurus.<br>
+        Awesome gopher images from <a href="https://github.com/ashleymcnamara/gophers">ashleymcnamara/gophers</a>.
+        `,
       },
       prism: {
         theme: lightCodeTheme,

@@ -5,7 +5,7 @@ description: "Render a cast multiple times"
 
 # Collection Casts
 
-You can render a cast multiple times using the `each` property. The `each` property is a [Go template](https://pkg.go.dev/text/template) that is evaluated with the cast variables. The result of the template should be a list of objects represented as a JSON array. Each object in the list is used to render the cast. The object is passed to the cast as a variable. The variable name is `It` by default, but it can be overridden using the `as` property. The function `to_json` can be used to convert a string to a JSON object.
+You can render a cast multiple times using the `each` property. The `each` property is a [Go template](https://pkg.go.dev/text/template) that is evaluated with the cast variables. The result of the template should be a list of objects represented as a JSON array. Each object in the list is used to render the cast. The object is passed to the cast as a variable. The variable name is `It` by default, but it can be overridden using the `as` property. The function `toJson` can be used to convert a string to a JSON object.
 
 ## Item Alias
 

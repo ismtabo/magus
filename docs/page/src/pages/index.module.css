@@ -16,8 +16,14 @@
   }
 }
 
+.heroImage {
+  width: 10rem;
+  aspect-ratio: 1/1;
+}
+
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
 }

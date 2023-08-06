@@ -15,8 +15,8 @@ func TestFromFile(t *testing.T) {
 	t.Run("it should return the variables from a yaml file", func(t *testing.T) {
 		path := filepath.Join(t.TempDir(), "vars.yaml")
 		data := []byte(dedent.Dedent(`
-			foo: bar
-			baz: qux
+		foo: bar
+		baz: qux
 		`))
 		if err := os.WriteFile(path, data, 0755); err != nil {
 			t.Fatal(err)
@@ -36,12 +36,7 @@ func TestFromFile(t *testing.T) {
 
 	t.Run("it should return the variables from a json file", func(t *testing.T) {
 		path := filepath.Join(t.TempDir(), "vars.json")
-		data := []byte(dedent.Dedent(`
-		{
-			"foo": "bar",
-			"baz": "qux"
-		}
-		`))
+		data := []byte(dedent.Dedent(`{ "foo": "bar", "baz": "qux" }`))
 		if err := os.WriteFile(path, data, 0755); err != nil {
 			t.Fatal(err)
 		}
@@ -79,7 +74,7 @@ func TestFromFile(t *testing.T) {
 	})
 
 	t.Run("it should return an error if the file is not a valid yaml file", func(t *testing.T) {
-		path := filepath.Join(t.TempDir(), "vars.yaml")
+		path := filepath.Join(t.TempDir(), "invalid-vars.yaml")
 		data := []byte(dedent.Dedent(`
 			foo: "
 		`))
@@ -95,7 +90,7 @@ func TestFromFile(t *testing.T) {
 	})
 
 	t.Run("it should return an error if the file is not a valid json file", func(t *testing.T) {
-		path := filepath.Join(t.TempDir(), "vars.json")
+		path := filepath.Join(t.TempDir(), "invalid-vars.json")
 		data := []byte(dedent.Dedent(`
 		{
 			"foo": ""

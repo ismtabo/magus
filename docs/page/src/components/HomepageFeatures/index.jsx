@@ -1,11 +1,13 @@
 import React from 'react';
 import clsx from 'clsx';
+
 import styles from './styles.module.css';
 
 /** 
  * @typedef {object} Feature 
  * @property {string} title
  * @property {string} description
+ * @property {string} image
  */
 
 /** @type {Feature[]} */
@@ -18,6 +20,7 @@ const FeatureList = [
         generate source code for your projects.
       </>
     ),
+    image: require('@site/static/img/GOPHER_LAPTOP.png').default,
   },
   {
     title: 'Zero Configuration',
@@ -27,16 +30,18 @@ const FeatureList = [
         write your own templates and start generating code.
       </>
     ),
+    image: require('@site/static/img/GOPHER_MIC_DROP.png').default,
   },
 ];
 
 /** @param {Feature} options */
-function Feature({ title, description }) {
+function Feature({ title, description, image }) {
   return (
     <div className={clsx('col col--6')}>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
         <p>{description}</p>
+        <p><img className={styles.featureImg} src={image} alt={title} /></p>
       </div>
     </div>
   );

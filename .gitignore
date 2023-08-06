@@ -51,3 +51,7 @@ targets/
 
 ## VS Code Workspaces ##
 *.code-workspace
+
+## Taskfile ##
+Taskfile.yml
+Taskfile.yaml

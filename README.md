@@ -6,7 +6,7 @@ MAGUS is a tool for automatically generating magic source files based on a manif
 
 ### Using Go
 ```bash
-go install github.com/ismtabo/magus
+go install github.com/ismtabo/magus@latest
 ```
 
 ## Usage
@@ -73,12 +73,8 @@ Sources are used to define the sources of the magic source file to be generated.
 
 ### Helpers
 
-Helpers are used to define functions that can be used in the render process. These functions are provided by magus. Currently, the following helpers are available:
+Magus extends the basic golang text/template engine by including [`slim-sprig`](https://go-task.github.io/slim-sprig). This package provides a set of helper functions that can be used in the YAML manifest. Helper functions are used in the render of paths, templates, and conditions. In addition, magus add the following helpers:
 
-- `to_json`: converts a value into a JSON string.
-- `lower`: converts a string into lowercase.
-- `upper`: converts a string into uppercase.
-- `title`: converts a string into title case.
 - `snake`: converts a string into snake case.
 - `kebab`: converts a string into kebab case.
 - `camel`: converts a string into camel case.
@@ -201,7 +197,7 @@ See [LICENSE](LICENSE) for more information.
 
 ## Contributing
 
-See [CONTRIBUTING](CONTRIBUTING.md) for more information.
+To contribute to this project, please fork the repository and submit a pull request.
 
 ## Changelog
 

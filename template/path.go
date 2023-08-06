@@ -1,6 +1,7 @@
 package template
 
 import (
+	"path/filepath"
 	"regexp"
 
 	go_errors "github.com/pkg/errors"
@@ -9,7 +10,7 @@ import (
 )
 
 var (
-	pathRegex = regexp.MustCompile(`^(?:[a-zA-Z0-9_-]+|\.{1,2})(?:(?:/|\\)(?:[a-zA-Z0-9_-]+|\.{1,2}))*$`)
+	pathRegex = regexp.MustCompile(`^[^<>:"|?*\\/\n]+$|^(([a-zA-Z]:)?(\.|\.\.|[^<>:"|?*\\\n]+)?(\\[^<>:"\\|?*]+)+\\?)$|^((\.|\.\.|[^<>:"|?*\\\n]+)?(/[^<>:"|?*\\\n]+)+/?)$`)
 )
 
 type TemplatedPath struct {
@@ -26,9 +27,15 @@ func (p TemplatedPath) Render(ctx context.Context) (string, error) {
 		// TODO: Wrap error
 		return "", err
 	}
-	if match := pathRegex.MatchString(value); !match {
-		// TODO: Wrap error
+	// if match := pathRegex.MatchString(value); !match {
+	// 	// TODO: Wrap error
+	// 	return "", go_errors.Errorf("template returned a non-path path: %s", value)
+	// }
+	if match := pathRegex.Match([]byte(value)); !match {
 		return "", go_errors.Errorf("template returned a non-path path: %s", value)
+	}
+	if isAbs := filepath.IsAbs(value); isAbs {
+		return "", go_errors.Errorf("template returned a non-relative path: %s", value)
 	}
 	return value, nil
 }

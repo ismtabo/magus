@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
-* feat: add magus project skeleton
+* feat: initial version of the project
 * feat: add generate command to render files based on manifest
 * feat: add support for templates
 * feat: add support for helpers

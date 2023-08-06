@@ -137,7 +137,7 @@ In this example, the `project_name` variable is defined at root level. It is use
 
 There are two special variables: `conditions` and `collections`. They are used to provide conditional rendering and rendering over collections. Will be explained in depth later in [Conditional Rendering](./conditional.md) and [Rendering over Collections](./collection.md) sections.
 
-To summarize, `condition` variables will be interpreted as a boolean value. If the value is `true` the cast will be rendered, otherwise it will be considered false. `collections` variables will be interpreted as a list of values and need to be rendered as valid JSON Array strings. So, they can later be used in the cast to render over the collection. The `to_json` function can be used to render a valid JSON Array string from a list of values.
+To summarize, `condition` variables will be interpreted as a boolean value. If the value is `true` the cast will be rendered, otherwise it will be considered false. `collections` variables will be interpreted as a list of values and need to be rendered as valid JSON Array strings. So, they can later be used in the cast to render over the collection. The `toJson` function can be used to render a valid JSON Array string from a list of values (see the document [helpers functions](./helpers.md) for more information).
 
 ```yaml
 variables:
@@ -151,8 +151,8 @@ casts:
     from: |
       Hello {{ .project_name }}!
     if: "{{ .condition }}"
-    each: "{{ .collection }}"
-    omit: "{{ .cast-condition | to_json }}"
+    each: "{{ .collection | toJson }}"
+    omit: "{{ .cast-condition }}"
     variables:
       - name: cast-condition
         value: true
