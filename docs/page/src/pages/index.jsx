@@ -20,8 +20,8 @@ function HomepageHeader() {
         <div className="container">
           <div className={clsx("row row--align-center", styles[`row--justify-center`])}>
             <div className="col col--5">
-              <Codeblock language="bash" codeBlock={true} >
-                {`$ go get github.com/ismtabo/magus`}
+              <Codeblock language="sh" >
+                {`go install github.com/ismtabo/magus@latest`}
               </Codeblock>
             </div>
           </div>
