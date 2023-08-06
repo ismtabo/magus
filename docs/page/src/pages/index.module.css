@@ -26,4 +26,13 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.row--justify-center {
+  justify-content: center;
+}
+
+.patata{
+  background-color: red;
 }

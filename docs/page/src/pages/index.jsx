@@ -1,9 +1,9 @@
 import React from 'react';
-
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import logo from '@site/static/img/DOCTOR_STRANGE_GOPHER.png';
+import Codeblock from '@theme/CodeBlock';
 import Layout from '@theme/Layout';
 import clsx from 'clsx';
 
@@ -16,7 +16,16 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <p><img className={styles.heroImage} src={logo} alt="" srcset="" /></p>
+        <p><img className={styles.heroImage} src={logo} alt={siteConfig.title} /></p>
+        <div className="container">
+          <div className={clsx("row row--align-center", styles[`row--justify-center`])}>
+            <div className="col col--5">
+              <Codeblock language="bash" codeBlock={true} >
+                {`$ go get github.com/ismtabo/magus`}
+              </Codeblock>
+            </div>
+          </div>
+        </div>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
