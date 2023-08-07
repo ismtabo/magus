@@ -1,5 +1,7 @@
 # MAGUS (MAgic Generation Utility for Source)
 
+[![GoDoc](https://godoc.org/github.com/ismtabo/magus?status.svg)](https://godoc.org/github.com/ismtabo/magus) [![Go Report Card](https://goreportcard.com/badge/github.com/ismtabo/magus)](https://goreportcard.com/report/github.com/ismtabo/magus)
+
 MAGUS is a tool for automatically generating magic source files based on a manifest.
 
 ## Installation
