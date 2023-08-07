@@ -13,12 +13,12 @@ var (
 		Use:   "version",
 		Short: "Magus version",
 		Run: func(cmd *cobra.Command, args []string) {
-			fmt.Println(config.Version)
+			fmt.Println(config.GetVersion())
 			if build {
-				fmt.Println(config.Build)
+				fmt.Println(config.GetBuildTime())
 			}
 			if _os {
-				fmt.Println(config.OS)
+				fmt.Println(config.GetOS())
 			}
 		},
 	}
