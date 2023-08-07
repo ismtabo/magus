@@ -5,8 +5,10 @@ vars:
   BINARY_NAME: magus
   TARGET_DIR: target
   VERSION:
-    0.0.1
-    # sh: git describe --tags --match "*.*.*" --candidates 1
+    sh: git describe --tags --match "*.*.*" --candidates 1 | sed -e 's/^v//'
+  BUILD:
+    sh: git rev-parse --short HEAD
+  BUILD_TIME: "{{now | date `2006-01-02T15:04+00:00`}}"
   ARCH: amd64
   TARGET_OSS: linux
   OUTPUTS: |
@@ -22,7 +24,6 @@ vars:
   DOCS_FILES: |
     README.md
     CHANGELOG.md
-  DATE: "{{now | date `2006-01-02T15:04+00:00`}}"
 
 includes:
   docs:
@@ -38,7 +39,7 @@ tasks:
     cmds:
       - |
         GOARCH={{.ARCH}} GOOS={{.TARGET_OS}} go build \
-        -ldflags "-X '{{.PACKAGE}}/config.Version={{.VERSION}}' -X '{{.PACKAGE}}/config.BuildTime={{.DATE}}' -X '{{.PACKAGE}}/config.OS={{.TARGET_OS}}'" \
+        -ldflags "-X '{{.PACKAGE}}/config.Version={{.VERSION}}' -X '{{.PACKAGE}}/config.Build={{.BUILD}}' -X '{{.PACKAGE}}/config.BuildTime={{.BUILD_TIME}}' -X '{{.PACKAGE}}/config.OS={{.TARGET_OS}}'" \
         -o {{.TARGET_DIR}}/{{.BINARY_NAME}}-{{.TARGET_OS}}-{{.ARCH}} \
         main.go
     requires:
@@ -47,6 +48,7 @@ tasks:
     sources:
       - main.go
       - "*.go"
+      - "**/*.go"
     generates:
       - "{{.TARGET_DIR}}/{{.BINARY_NAME}}-{{.TARGET_OS}}-{{.ARCH}}"
   build:
