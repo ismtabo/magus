@@ -32,6 +32,7 @@ require (
 
 require (
 	github.com/benbjohnson/immutable v0.4.3
+	github.com/carlmjohnson/versioninfo v0.22.5
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/iancoleman/strcase v0.3.0
 	github.com/kr/pretty v0.3.1 // indirect

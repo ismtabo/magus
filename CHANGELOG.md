@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Security
 
+## [1.0.4] - (2023-08-07)
+
+### Fixed
+
+*   fix: mend `version` command to show correct package version, build time and os
+
 ## [1.0.3] - (2023-08-06)
 
 ### Changed
