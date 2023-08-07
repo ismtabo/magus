@@ -19,8 +19,6 @@ For further information about the Go template engine, please refer to the [offic
 ## Example
 
 ```yaml
-root: "{{ .project_name }}"
-
 casts:
   - from: "{{ .project_name }}.cast"
     to: "{{ .project_name }}.cast"
