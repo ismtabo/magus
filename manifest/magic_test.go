@@ -1,4 +1,4 @@
-package magic_test
+package manifest_test
 
 import (
 	"testing"
@@ -19,7 +19,7 @@ func TestFromManifest(t *testing.T) {
 			Name:    "test",
 		}
 
-		m := magic.FromManifest(mf)
+		m := manifest.NewMagic(mf)
 
 		assert.Equal(t, magic.NewMagic("1.0.0", "test", []variable.Variable{}, []cast.Cast{}), m)
 	})
@@ -36,7 +36,7 @@ func TestFromManifest(t *testing.T) {
 			},
 		}
 
-		m := magic.FromManifest(mf)
+		m := manifest.NewMagic(mf)
 
 		assert.Equal(t, magic.NewMagic("1.0.0", "test", []variable.Variable{
 			variable.NewLiteralVariable("name", "value"),
@@ -55,7 +55,7 @@ func TestFromManifest(t *testing.T) {
 			},
 		}
 
-		m := magic.FromManifest(mf)
+		m := manifest.NewMagic(mf)
 
 		assert.Equal(t, magic.NewMagic("1.0.0", "test", []variable.Variable{}, []cast.Cast{
 			cast.NewBaseCast(source.NewTemplateSource("from"), template.NewTemplatedPath("to"), variable.Variables{}),

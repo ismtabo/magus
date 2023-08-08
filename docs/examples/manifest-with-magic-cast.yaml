@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../schema/magic.json
+version: "v1"
+name: "Instance templates"
+root: "."
+
+casts:
+  magic:
+    to: "./magic/"
+    from: 
+      magic: "./docs/examples/template-only.yaml"
