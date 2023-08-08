@@ -23,7 +23,7 @@ type GenerateOptions struct {
 
 func Generate(ctx context.Context, dest string, mfst manifest.Manifest, opts GenerateOptions) ([]file.File, error) {
 	ctx = ctx.WithCwd(filepath.Join(ctx.Cwd(), mfst.Root))
-	mgc := magic.FromManifest(mfst)
+	mgc := manifest.NewMagic(mfst)
 
 	files, err := mgc.Render(ctx.WithCwd(dest), magic.MagicRenderOptions{
 		Variables: opts.Variables,

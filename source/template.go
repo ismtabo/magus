@@ -6,6 +6,8 @@ import (
 	"github.com/ismtabo/magus/template"
 )
 
+var _ Source = &templateSource{}
+
 type TemplateSource interface {
 	Source
 }

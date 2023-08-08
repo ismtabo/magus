@@ -1,4 +1,4 @@
-$schema: "../schema/magic.json"
+# yaml-language-server: $schema=../schema/magic.json
 version: "v1"
 name: "Instance templates"
 root: "."
@@ -22,4 +22,4 @@ casts:
   repeated-cast:
     to: "./salute-{{ .It | lower }}.md"
     from: "{{ .Salute }} {{ .It }}!"
-    each: "{{ .Array | to_json }}"
+    each: "{{ .Array | toJson }}"
