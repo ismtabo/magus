@@ -26,7 +26,7 @@ func NewFailingCondition() condition.Condition {
 
 func TestConditionalCast_Compile(t *testing.T) {
 	t.Run("it should render the source to the destination if the condition is true", func(t *testing.T) {
-		src := source.NewSource("Hello World!\n")
+		src := source.NewTemplateSource("Hello World!\n")
 		dest := template.NewTemplatedPath("testdata/conditional/dest")
 		cond := condition.NewAlwaysTrueCondition()
 		baseCast := cast.NewBaseCast(src, dest, variable.Variables{})
@@ -42,7 +42,7 @@ func TestConditionalCast_Compile(t *testing.T) {
 	})
 
 	t.Run("it should not render the source to the destination if the condition is false", func(t *testing.T) {
-		src := source.NewSource("Hello World!\n")
+		src := source.NewTemplateSource("Hello World!\n")
 		dest := template.NewTemplatedPath("testdata/conditional/dest")
 		cond := condition.NewNegatedCondition(condition.NewAlwaysTrueCondition())
 		baseCast := cast.NewBaseCast(src, dest, variable.Variables{})
@@ -56,7 +56,7 @@ func TestConditionalCast_Compile(t *testing.T) {
 	})
 
 	t.Run("it should return an error if the condition evaluation fails", func(t *testing.T) {
-		src := source.NewSource("Hello World!\n")
+		src := source.NewTemplateSource("Hello World!\n")
 		dest := template.NewTemplatedPath("testdata/conditional/dest")
 		cond := NewFailingCondition()
 		baseCast := cast.NewBaseCast(src, dest, variable.Variables{})

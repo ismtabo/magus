@@ -1,4 +1,4 @@
-package cast_test
+package manifest_test
 
 import (
 	"testing"
@@ -21,7 +21,7 @@ func TestNewCast(t *testing.T) {
 			},
 		}
 
-		c := cast.NewCast(m)
+		c := manifest.NewCast(m)
 
 		assert.IsType(t, &cast.BaseCast{}, c)
 	})
@@ -33,7 +33,7 @@ func TestNewCast(t *testing.T) {
 			If:   "true",
 		}
 
-		c := cast.NewCast(m)
+		c := manifest.NewCast(m)
 
 		assert.IsType(t, &cast.ConditionalCast{}, c)
 	})
@@ -45,7 +45,7 @@ func TestNewCast(t *testing.T) {
 			Unless: "false",
 		}
 
-		c := cast.NewCast(m)
+		c := manifest.NewCast(m)
 
 		assert.IsType(t, &cast.ConditionalCast{}, c)
 	})
@@ -57,7 +57,7 @@ func TestNewCast(t *testing.T) {
 			Each: "[]",
 		}
 
-		c := cast.NewCast(m)
+		c := manifest.NewCast(m)
 
 		assert.IsType(t, &cast.CollectionCast{}, c)
 	})
@@ -70,7 +70,7 @@ func TestNewCast(t *testing.T) {
 			As:   "foo",
 		}
 
-		c := cast.NewCast(m)
+		c := manifest.NewCast(m)
 
 		assert.IsType(t, &cast.CollectionCast{}, c)
 	})
@@ -83,7 +83,7 @@ func TestNewCast(t *testing.T) {
 			Include: "true",
 		}
 
-		c := cast.NewCast(m)
+		c := manifest.NewCast(m)
 
 		assert.IsType(t, &cast.CollectionCast{}, c)
 	})
@@ -96,7 +96,7 @@ func TestNewCast(t *testing.T) {
 			Omit: "false",
 		}
 
-		c := cast.NewCast(m)
+		c := manifest.NewCast(m)
 
 		assert.IsType(t, &cast.CollectionCast{}, c)
 	})
@@ -109,7 +109,7 @@ func TestNewCast(t *testing.T) {
 			If:   "true",
 		}
 
-		c := cast.NewCast(m)
+		c := manifest.NewCast(m)
 
 		assert.IsType(t, &cast.ConditionalCollectionCast{}, c)
 	})
@@ -122,7 +122,7 @@ func TestNewCast(t *testing.T) {
 			Unless: "false",
 		}
 
-		c := cast.NewCast(m)
+		c := manifest.NewCast(m)
 
 		assert.IsType(t, &cast.ConditionalCollectionCast{}, c)
 	})

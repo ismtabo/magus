@@ -24,7 +24,7 @@ func (v *FailingVariable) Value(ctx context.Context) (interface{}, error) {
 
 func TestBaseCast_Compile(t *testing.T) {
 	t.Run("it should render the source to the destination", func(t *testing.T) {
-		src := source.NewSource("Hello {{ .name }}!\n")
+		src := source.NewTemplateSource("Hello {{ .name }}!\n")
 		dest := template.NewTemplatedPath("testdata/base/dest")
 		vars := []variable.Variable{
 			variable.NewLiteralVariable("name", "John"),
@@ -41,7 +41,7 @@ func TestBaseCast_Compile(t *testing.T) {
 	})
 
 	t.Run("it should render the source to the destination with the correct cwd", func(t *testing.T) {
-		src := source.NewSource("Hello {{ .name }}!\n")
+		src := source.NewTemplateSource("Hello {{ .name }}!\n")
 		dest := template.NewTemplatedPath("./testdata/base/dest")
 		vars := []variable.Variable{
 			variable.NewLiteralVariable("name", "John"),
@@ -59,7 +59,7 @@ func TestBaseCast_Compile(t *testing.T) {
 	})
 
 	t.Run("it should render the source to the destination with correct variables", func(t *testing.T) {
-		src := source.NewSource("Hello {{ .name }}!\n")
+		src := source.NewTemplateSource("Hello {{ .name }}!\n")
 		dest := template.NewTemplatedPath("./testdata/base/dest/{{ .filename }}")
 		vars := []variable.Variable{
 			variable.NewLiteralVariable("name", "John"),
@@ -78,7 +78,7 @@ func TestBaseCast_Compile(t *testing.T) {
 	})
 
 	t.Run("it should return error if variables evaluation fails", func(t *testing.T) {
-		src := source.NewSource("Hello {{ .name }}!\n")
+		src := source.NewTemplateSource("Hello {{ .name }}!\n")
 		dest := template.NewTemplatedPath("./testdata/base/dest/{{ .filename }}")
 		vars := []variable.Variable{
 			variable.NewLiteralVariable("name", "John"),
@@ -95,7 +95,7 @@ func TestBaseCast_Compile(t *testing.T) {
 	})
 
 	t.Run("it should return error if destination evaluation fails", func(t *testing.T) {
-		src := source.NewSource("Hello {{ .name }}!\n")
+		src := source.NewTemplateSource("Hello {{ .name }}!\n")
 		dest := template.NewTemplatedPath("./testdata/base/dest/{{ .filename }")
 		vars := []variable.Variable{
 			variable.NewLiteralVariable("name", "John"),

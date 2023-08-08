@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=../schema/magic.json
 version: "v1" # ignored by now
 name: "Instance templates"
 root: "." # root dir (this can be ovewriten later by `--dir` option)
