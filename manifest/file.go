@@ -10,5 +10,9 @@ func Unmarshal(ctx context.Context, path string, manifest *Manifest) error {
 	if err != nil {
 		return err
 	}
-	return UnmarshalYAML(ctx, file.Bytes(), manifest)
+	if err := UnmarshalYAML(ctx, file.Bytes(), manifest); err != nil {
+		return err
+	}
+	manifest.File = file
+	return nil
 }

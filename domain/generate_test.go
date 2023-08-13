@@ -7,6 +7,7 @@ import (
 
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/domain"
+	"github.com/ismtabo/magus/file"
 	"github.com/ismtabo/magus/manifest"
 	"github.com/ismtabo/magus/variable"
 	"github.com/lithammer/dedent"
@@ -20,6 +21,7 @@ func TestGenerate(t *testing.T) {
 		ctx := context.New()
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
+			File:    file.NewFile("manifest.yaml", nil),
 			Version: "1",
 			Name:    "test",
 			Root:    ".",
@@ -32,11 +34,11 @@ func TestGenerate(t *testing.T) {
 			Casts: manifest.Casts{
 				"magic": manifest.Cast{
 					To: "magic",
-					From: dedent.Dedent(`
+					From: manifest.Source{}.FromString(dedent.Dedent(`
 						{{ .foo }}
 						{{ .bar }}
 						{{ .baz }}
-					`),
+					`)),
 					Variables: []manifest.Variable{
 						{
 							Name:  "bar",
@@ -65,12 +67,64 @@ func TestGenerate(t *testing.T) {
 		assert.FileExists(t, filepath.Join(outDir, "magic"))
 	})
 
+	t.Run("it should use manifest root if empty directory is given", func(t *testing.T) {
+		cwd := t.TempDir()
+		ctx := context.New()
+		ctx = ctx.WithCwd(cwd)
+		mfst := manifest.Manifest{
+			File:    file.NewFile("manifest.yaml", nil),
+			Version: "1",
+			Name:    "test",
+			Root:    "out",
+			Variables: []manifest.Variable{
+				{
+					Name:  "foo",
+					Value: "foo",
+				},
+			},
+			Casts: manifest.Casts{
+				"magic": manifest.Cast{
+					To: "magic",
+					From: manifest.Source{}.FromString(dedent.Dedent(`
+						{{ .foo }}
+						{{ .bar }}
+						{{ .baz }}
+					`)),
+					Variables: []manifest.Variable{
+						{
+							Name:  "bar",
+							Value: "bar",
+						},
+					},
+				},
+			},
+		}
+		opts := domain.GenerateOptions{
+			Variables: variable.Variables{
+				variable.NewLiteralVariable("baz", "baz"),
+			},
+		}
+
+		files, err := domain.Generate(ctx, "", mfst, opts)
+
+		assert.NoError(t, err)
+		assert.Equal(t, 1, len(files))
+		assert.Equal(t, filepath.Join("out", "magic"), files[0].Path())
+		assert.Equal(t, dedent.Dedent(`
+			foo
+			bar
+			baz
+		`), files[0].Value())
+		assert.FileExists(t, filepath.Join(cwd, "out", "magic"))
+	})
+
 	t.Run("it should not create files on dry run", func(t *testing.T) {
 		cwd := t.TempDir()
 		outDir := filepath.Join(cwd, "out")
 		ctx := context.New()
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
+			File:    file.NewFile("manifest.yaml", nil),
 			Version: "1",
 			Name:    "test",
 			Root:    ".",
@@ -83,11 +137,11 @@ func TestGenerate(t *testing.T) {
 			Casts: manifest.Casts{
 				"magic": manifest.Cast{
 					To: "magic",
-					From: dedent.Dedent(`
+					From: manifest.Source{}.FromString(dedent.Dedent(`
 						{{ .foo }}
 						{{ .bar }}
 						{{ .baz }}
-					`),
+					`)),
 					Variables: []manifest.Variable{
 						{
 							Name:  "bar",
@@ -130,6 +184,7 @@ func TestGenerate(t *testing.T) {
 		ctx := context.New()
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
+			File:    file.NewFile("manifest.yaml", nil),
 			Version: "1",
 			Name:    "test",
 			Root:    ".",
@@ -142,11 +197,11 @@ func TestGenerate(t *testing.T) {
 			Casts: manifest.Casts{
 				"magic": manifest.Cast{
 					To: "magic",
-					From: dedent.Dedent(`
+					From: manifest.Source{}.FromString(dedent.Dedent(`
 						{{ .foo }}
 						{{ .bar }}
 						{{ .baz }}
-					`),
+					`)),
 					Variables: []manifest.Variable{
 						{
 							Name:  "bar",
@@ -187,6 +242,7 @@ func TestGenerate(t *testing.T) {
 		ctx := context.New()
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
+			File:    file.NewFile("manifest.yaml", nil),
 			Version: "1",
 			Name:    "test",
 			Root:    ".",
@@ -199,11 +255,11 @@ func TestGenerate(t *testing.T) {
 			Casts: manifest.Casts{
 				"magic": manifest.Cast{
 					To: "magic",
-					From: dedent.Dedent(`
+					From: manifest.Source{}.FromString(dedent.Dedent(`
 						{{ .foo }}
 						{{ .bar }}
 						{{ .baz }}
-					`),
+					`)),
 					Variables: []manifest.Variable{
 						{
 							Name:  "bar",
@@ -259,6 +315,7 @@ func TestGenerate(t *testing.T) {
 		ctx := context.New()
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
+			File:    file.NewFile("manifest.yaml", nil),
 			Version: "1",
 			Name:    "test",
 			Root:    ".",
@@ -271,11 +328,11 @@ func TestGenerate(t *testing.T) {
 			Casts: manifest.Casts{
 				"magic": manifest.Cast{
 					To: "magic",
-					From: dedent.Dedent(`
+					From: manifest.Source{}.FromString(dedent.Dedent(`
 						{{ .foo }}
 						{{ .bar }}
 						{{ .baz }}
-					`),
+					`)),
 					Variables: []manifest.Variable{
 						{
 							Name:  "bar",
@@ -322,6 +379,7 @@ func TestGenerate(t *testing.T) {
 		ctx := context.New()
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
+			File:      file.NewFile("manifest.yaml", nil),
 			Version:   "1",
 			Name:      "test",
 			Root:      ".",
@@ -329,9 +387,9 @@ func TestGenerate(t *testing.T) {
 			Casts: manifest.Casts{
 				"magic": manifest.Cast{
 					To: "magic",
-					From: dedent.Dedent(`
+					From: manifest.Source{}.FromString(dedent.Dedent(`
 						{{ .foo
-					`),
+					`)),
 					Variables: []manifest.Variable{},
 				},
 			},
@@ -350,6 +408,7 @@ func TestGenerate(t *testing.T) {
 		ctx := context.New()
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
+			File:      file.NewFile("manifest.yaml", nil),
 			Version:   "1",
 			Name:      "test",
 			Root:      ".",
@@ -357,16 +416,16 @@ func TestGenerate(t *testing.T) {
 			Casts: manifest.Casts{
 				"magic": manifest.Cast{
 					To: "magic",
-					From: dedent.Dedent(`
+					From: manifest.Source{}.FromString(dedent.Dedent(`
 						{{ .foo }}
-					`),
+					`)),
 					Variables: []manifest.Variable{},
 				},
 				"other": manifest.Cast{
 					To: "magic",
-					From: dedent.Dedent(`
+					From: manifest.Source{}.FromString(dedent.Dedent(`
 						{{ .foo }}
-					`),
+					`)),
 					Variables: []manifest.Variable{},
 				},
 			},
@@ -377,5 +436,52 @@ func TestGenerate(t *testing.T) {
 
 		assert.Error(t, err)
 		assert.Nil(t, files)
+	})
+
+	t.Run("it should render files from magic casts", func(t *testing.T) {
+		cwd := t.TempDir()
+		outDir := filepath.Join(cwd, "out")
+		ctx := context.New()
+		ctx = ctx.WithCwd(cwd)
+		mfst := manifest.Manifest{
+			File:      file.NewFile("manifest.yaml", nil),
+			Version:   "1",
+			Name:      "test",
+			Root:      ".",
+			Variables: []manifest.Variable{},
+			Casts: manifest.Casts{
+				"magic": manifest.Cast{
+					To: "magic",
+					From: manifest.Source{}.FromStruct(
+						manifest.MagicSource{
+							Magic: "foo.yaml",
+						},
+					),
+					Variables: []manifest.Variable{},
+				},
+			},
+		}
+		opts := domain.GenerateOptions{}
+		foo_mfst := dedent.Dedent(`
+		---
+		version: 0.1.0
+		name: magus
+		root: .
+		casts:
+		  foo:
+		    to: bar
+		    from: baz
+		`)
+		if err := os.WriteFile(filepath.Join(cwd, "foo.yaml"), []byte(foo_mfst), 0644); err != nil {
+			t.Fatal(err)
+		}
+
+		files, err := domain.Generate(ctx, outDir, mfst, opts)
+
+		assert.NoError(t, err)
+		assert.Len(t, files, 1)
+		assert.Equal(t, filepath.Join(outDir, "magic", "bar"), files[0].Path())
+		assert.Equal(t, "baz", files[0].Value())
+		assert.FileExists(t, filepath.Join(outDir, "magic", "bar"))
 	})
 }

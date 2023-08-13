@@ -9,6 +9,7 @@ import (
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/domain"
 	"github.com/ismtabo/magus/manifest"
+	"github.com/ismtabo/magus/validate"
 	"github.com/ismtabo/magus/variable"
 	"github.com/lithammer/dedent"
 	"github.com/pkg/errors"
@@ -49,7 +50,7 @@ var (
 		Args: cobra.ExactArgs(1),
 		RunE: runGenerate,
 	}
-	output_dir              = "."
+	output_dir              = ""
 	dry_run                 = false
 	clean                   = false
 	overwrite               = false
@@ -59,7 +60,7 @@ var (
 
 func init() {
 	rootCmd.AddCommand(generateCmd)
-	generateCmd.Flags().StringVar(&output_dir, "dir", ".", "Output directory")
+	generateCmd.Flags().StringVar(&output_dir, "dir", "", "Output directory")
 	generateCmd.Flags().BoolVar(&dry_run, "dry-run", false, "Dry run")
 	generateCmd.Flags().BoolVar(&clean, "clean", false, "Clean output directory")
 	generateCmd.Flags().BoolVarP(&overwrite, "overwrite", "w", false, "Overwrite existing files")
@@ -79,8 +80,10 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 	}
 
 	mf := manifest.Manifest{}
-	err := manifest.Unmarshal(ctx, m_file, &mf)
-	if err != nil {
+	if err := manifest.Unmarshal(ctx, m_file, &mf); err != nil {
+		return err
+	}
+	if err := validate.ValidateNoCycles(ctx, mf); err != nil {
 		return err
 	}
 
