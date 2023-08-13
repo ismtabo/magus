@@ -8,17 +8,19 @@ import (
 
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/manifest"
+	"github.com/lithammer/dedent"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestUnmarshal(t *testing.T) {
 	t.Run("it should unmarshal a manifest", func(t *testing.T) {
 		m := &manifest.Manifest{}
-		y := []byte(`---
-version: 0.1.0
-name: magus
-root: .
-`)
+		y := []byte(dedent.Dedent(`
+		---
+		version: 0.1.0
+		name: magus
+		root: .
+		`))
 		fp := filepath.Join(t.TempDir(), "manifest.yaml")
 		if err := os.WriteFile(fp, y, fs.FileMode(0644)); err != nil {
 			t.Fatal(err)
@@ -45,9 +47,10 @@ root: .
 
 	t.Run("it should return an error if the manifest is invalid", func(t *testing.T) {
 		m := &manifest.Manifest{}
-		y := []byte(`---
-version: {}
-`)
+		y := []byte(dedent.Dedent(`
+		---
+		version: {}
+		`))
 		fp := filepath.Join(t.TempDir(), "manifest.yaml")
 		if err := os.WriteFile(fp, y, fs.FileMode(0644)); err != nil {
 			t.Fatal(err)

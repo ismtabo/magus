@@ -31,6 +31,13 @@ func TestWith(t *testing.T) {
 	assert.Equal(t, "bar", ctx.Value(testKeyFoo))
 }
 
+func TestWithValue(t *testing.T) {
+	ctx := context.New()
+	ctx = context.WithValue(ctx, testKeyFoo, "bar")
+	assert.NotNil(t, ctx)
+	assert.Equal(t, "bar", ctx.Value(testKeyFoo))
+}
+
 func TestContext_Cwd(t *testing.T) {
 	ctx := context.New()
 	assert.Equal(t, "", ctx.Cwd())

@@ -1,13 +1,19 @@
 package manifest
 
+import (
+	"github.com/ismtabo/magus/file"
+)
+
 // Manifest is the representation of a manifest file.
 type Manifest struct {
+	// File is the file of the manifest.
+	file.File `yaml:"-"`
 	// Version is the version of the manifest.
 	Version string `yaml:"version" validate:"required"`
 	// Name is the name of the manifest.
 	Name string `yaml:"name" validate:"required"`
 	// Root is the output root dir of the manifest.
-	Root string `yaml:"root" validate:"required"`
+	Root string `yaml:"root" validate:"required,dirpath"`
 	// Variables is the variables of the manifest.
 	Variables Variables `yaml:"variables" validate:"dive"`
 	// Casts is the casts of the manifest.
@@ -37,7 +43,7 @@ type Cast struct {
 	// To is the output path of the cast
 	To string `yaml:"to" validate:"required"`
 	// From is the input source of the cast
-	From Source `yaml:"from" validate:"required"`
+	From Source `yaml:"from" validate:"dive"`
 	// Variables is the variables of the cast
 	Variables Variables `yaml:"variables" validate:"dive"`
 	// If is the condition of the cast
@@ -55,4 +61,10 @@ type Cast struct {
 }
 
 // Source is the source of the cast.
-type Source = any
+type Source = EitherStringOrStruct[MagicSource]
+
+// MagicSource is the magic source of the cast.
+type MagicSource struct {
+	// Magic is the path of the included manifest.
+	Magic string `mapstructure:"magic" yaml:"magic" validate:"omitempty,filepath"`
+}

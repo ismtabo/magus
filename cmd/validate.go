@@ -5,6 +5,7 @@ import (
 
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/manifest"
+	"github.com/ismtabo/magus/validate"
 	"github.com/lithammer/dedent"
 	"github.com/spf13/cobra"
 )
@@ -25,14 +26,18 @@ func init() {
 
 func runValidate(cmd *cobra.Command, args []string) error {
 	m_file := args[0]
-
 	ctx := context.With(cmd.Context())
 	if cwd, err := os.Getwd(); err != nil {
 		return err
 	} else {
 		ctx = ctx.WithCwd(cwd)
 	}
-
 	mf := manifest.Manifest{}
-	return manifest.Unmarshal(ctx, m_file, &mf)
+	if err := manifest.Unmarshal(ctx, m_file, &mf); err != nil {
+		return err
+	}
+	if err := validate.ValidateNoCycles(ctx, mf); err != nil {
+		return err
+	}
+	return nil
 }

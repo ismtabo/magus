@@ -5,14 +5,13 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/ismtabo/magus/context"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 var v = validator.New()
 
 func init() {
 	v.RegisterValidation("required_with_any", requiredWithAny)
-	v.RegisterValidation("excluded_with", excludedWith)
 }
 
 func requiredWithAny(fl validator.FieldLevel) bool {
@@ -24,13 +23,6 @@ func requiredWithAny(fl validator.FieldLevel) bool {
 		}
 	}
 	return true
-}
-
-func excludedWith(fl validator.FieldLevel) bool {
-	other := fl.Param()
-	return (fl.Field().IsZero() && fl.Parent().FieldByName(other).IsZero()) ||
-		(fl.Field().IsZero() && !fl.Parent().FieldByName(other).IsZero()) ||
-		(!fl.Field().IsZero() && fl.Parent().FieldByName(other).IsZero())
 }
 
 func UnmarshalYAML(ctx context.Context, data []byte, manifest *Manifest) error {

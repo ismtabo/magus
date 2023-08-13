@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/magic"
 	"github.com/ismtabo/magus/manifest"
 	"github.com/ismtabo/magus/source"
 	"github.com/lithammer/dedent"
@@ -13,7 +15,7 @@ import (
 
 func TestNewSource(t *testing.T) {
 	t.Run("it should return a template source if the source is a string", func(t *testing.T) {
-		src := manifest.NewSource("Hello World!\n")
+		src := manifest.NewSource(context.New(), manifest.Source{}.FromString("Hello World!\n"))
 
 		assert.Implements(t, (*source.Source)(nil), src)
 	})
@@ -25,7 +27,7 @@ func TestNewSource(t *testing.T) {
 		version: "1"
 		name: "magic"
 		root: "."
-		
+
 		casts:
 		  hello:
 		    to: "world"
@@ -34,48 +36,48 @@ func TestNewSource(t *testing.T) {
 		if err := os.WriteFile(path, data, 0644); err != nil {
 			t.Fatal(err)
 		}
-		src := manifest.NewSource(map[string]interface{}{
-			"magic": path,
-		})
+		src := manifest.NewSource(context.New().WithCwd("."), manifest.Source{}.FromStruct(
+			manifest.MagicSource{
+				Magic: path,
+			},
+		))
 
 		assert.Implements(t, (*source.Source)(nil), src)
+		assert.Implements(t, (*magic.Magic)(nil), src)
 	})
 
-	t.Run("it should panic if the source is not a string neither a map", func(t *testing.T) {
-		assert.Panics(t, func() {
-			manifest.NewSource(123)
-		})
+	t.Run("it should return a magic source relative to the context cwd", func(t *testing.T) {
+		dir := t.TempDir()
+		path := filepath.Join(dir, "magic.yml")
+		data := []byte(dedent.Dedent(`
+		version: "1"
+		name: "magic"
+		root: "."
+		casts:
+		  hello:
+		    to: "world"
+		    from: "Hello World!"
+		`))
+		if err := os.WriteFile(path, data, 0644); err != nil {
+			t.Fatal(err)
+		}
+		ctx := context.New().WithCwd(dir)
+		src := manifest.NewSource(ctx, manifest.Source{}.FromStruct(
+			manifest.MagicSource{
+				Magic: "magic.yml",
+			},
+		))
+
+		assert.Implements(t, (*source.Source)(nil), src)
+		assert.Implements(t, (*magic.Magic)(nil), src)
 	})
 
-	t.Run("it should panic if the source is a map but it does not contain a magic key", func(t *testing.T) {
+	t.Run("it should panic if the source is a magic but it does not point to a file", func(t *testing.T) {
 		assert.Panics(t, func() {
-			manifest.NewSource(map[string]interface{}{
-				"hello": "world",
-			})
-		})
-	})
-
-	t.Run("it should panic if the source is a map but the magic key is not a string", func(t *testing.T) {
-		assert.Panics(t, func() {
-			manifest.NewSource(map[string]interface{}{
-				"magic": 123,
-			})
-		})
-	})
-
-	t.Run("it should panic if the source is a map but the magic key is an empty string", func(t *testing.T) {
-		assert.Panics(t, func() {
-			manifest.NewSource(map[string]interface{}{
-				"magic": "",
-			})
-		})
-	})
-
-	t.Run("it should panic if the source is a map but the magic key is a string that does not point to a file", func(t *testing.T) {
-		assert.Panics(t, func() {
-			manifest.NewSource(map[string]interface{}{
-				"magic": "hello",
-			})
+			manifest.NewSource(context.New(), manifest.Source{}.FromStruct(
+				manifest.MagicSource{
+					Magic: "hello",
+				}))
 		})
 	})
 }

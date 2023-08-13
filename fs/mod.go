@@ -3,6 +3,7 @@ package fs
 import (
 	go_errors "errors"
 	"os"
+	"path"
 	"path/filepath"
 
 	"github.com/gookit/goutil/fsutil"
@@ -11,21 +12,27 @@ import (
 	cp "github.com/otiai10/copy"
 )
 
-func ReadFile(ctx context.Context, path string) (file.File, error) {
-	data, err := os.ReadFile(path)
+func ReadFile(ctx context.Context, p string) (file.File, error) {
+	if !path.IsAbs(p) {
+		p = filepath.Join(ctx.Cwd(), p)
+	}
+	data, err := os.ReadFile(p)
 	if err != nil {
 		// TODO: Wrap error
 		return nil, err
 	}
-	return file.NewFile(path, data), nil
+	return file.NewFile(p, data), nil
 }
 
 type ReadDirOptions struct {
 	NoFailOnMissing bool
 }
 
-func ReadDir(ctx context.Context, path string, opts ReadDirOptions) ([]file.File, error) {
-	files, err := os.ReadDir(path)
+func ReadDir(ctx context.Context, p string, opts ReadDirOptions) ([]file.File, error) {
+	if !path.IsAbs(p) {
+		p = filepath.Join(ctx.Cwd(), p)
+	}
+	files, err := os.ReadDir(p)
 	if err != nil {
 		if os.IsNotExist(err) && opts.NoFailOnMissing {
 			return []file.File{}, nil
@@ -37,7 +44,7 @@ func ReadDir(ctx context.Context, path string, opts ReadDirOptions) ([]file.File
 	var result []file.File
 	for _, f := range files {
 		if f.IsDir() {
-			files, err := ReadDir(ctx, filepath.Join(path, f.Name()), opts)
+			files, err := ReadDir(ctx, filepath.Join(p, f.Name()), opts)
 			if err != nil {
 				// TODO: Wrap error
 				return nil, err
@@ -45,12 +52,12 @@ func ReadDir(ctx context.Context, path string, opts ReadDirOptions) ([]file.File
 			result = append(result, files...)
 			continue
 		}
-		data, err := os.ReadFile(filepath.Join(path, f.Name()))
+		data, err := os.ReadFile(filepath.Join(p, f.Name()))
 		if err != nil {
 			// TODO: Wrap error
 			return nil, err
 		}
-		fpath := filepath.Join(path, f.Name())
+		fpath := filepath.Join(p, f.Name())
 		result = append(result, file.NewFile(fpath, data))
 	}
 	return result, nil
