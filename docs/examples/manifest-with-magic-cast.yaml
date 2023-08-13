@@ -6,5 +6,5 @@ root: "."
 casts:
   magic:
     to: "./magic/"
-    from: 
-      magic: "./docs/examples/template-only.yaml"
+    from:
+      magic: "./template-only.yaml"

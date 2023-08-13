@@ -11,6 +11,8 @@ import (
 type File interface {
 	// Path is the path of the file.
 	Path() string
+	// Dir is the directory of the file.
+	Dir(ctx context.Context) (string, error)
 	// Abs returns the absolute path of the file.
 	Abs(ctx context.Context) (string, error)
 	// Rel returns the relative path of the file with context cwd.
@@ -41,6 +43,15 @@ func NewTextFile(path string, data string) File {
 // Path is the path of the file.
 func (f file) Path() string {
 	return f.path
+}
+
+// Dir is the directory of the file.
+func (f file) Dir(ctx context.Context) (string, error) {
+	path, err := f.Abs(ctx)
+	if err != nil {
+		return "", err
+	}
+	return filepath.Dir(path), nil
 }
 
 // Value is the content of the file.

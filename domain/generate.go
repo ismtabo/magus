@@ -2,7 +2,6 @@ package domain
 
 import (
 	"os"
-	"path/filepath"
 
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/file"
@@ -22,8 +21,11 @@ type GenerateOptions struct {
 }
 
 func Generate(ctx context.Context, dest string, mfst manifest.Manifest, opts GenerateOptions) ([]file.File, error) {
-	ctx = ctx.WithCwd(filepath.Join(ctx.Cwd(), mfst.Root))
-	mgc := manifest.NewMagic(mfst)
+	if dest == "" {
+		dest = mfst.Root
+	}
+
+	mgc := manifest.NewMagic(ctx, mfst)
 
 	files, err := mgc.Render(ctx.WithCwd(dest), magic.MagicRenderOptions{
 		Variables: opts.Variables,

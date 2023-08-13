@@ -9,6 +9,29 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestFile_Dir(t *testing.T) {
+	t.Run("it should return the directory of the file with context cwd", func(t *testing.T) {
+		f := file.NewFile("path", []byte{})
+		dir := t.TempDir()
+		ctx := context.New()
+		ctx = ctx.WithCwd(dir)
+
+		dir, err := f.Dir(ctx)
+
+		assert.NoError(t, err)
+		assert.Equal(t, dir, dir)
+	})
+
+	t.Run("it should return an error if cwd is not set", func(t *testing.T) {
+		f := file.NewFile("path", []byte{})
+		ctx := context.New()
+
+		_, err := f.Dir(ctx)
+
+		assert.Error(t, err)
+	})
+}
+
 func TestFile_Abs(t *testing.T) {
 	t.Run("it should return the absolute path of the file", func(t *testing.T) {
 		dir := t.TempDir()

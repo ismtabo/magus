@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/Masterminds/sprig/v3 v3.2.3
-	github.com/go-playground/validator/v10 v10.14.1
+	github.com/go-playground/validator/v10 v10.15.0
 	github.com/gookit/goutil v0.6.11
 	github.com/lithammer/dedent v1.1.0
 	github.com/stretchr/testify v1.8.4
@@ -41,12 +41,10 @@ require (
 	github.com/gertd/go-pluralize v0.2.1
 	github.com/iancoleman/strcase v0.3.0
 	github.com/kr/pretty v0.3.1 // indirect
-	github.com/mitchellh/mapstructure v1.5.0
 	github.com/otiai10/copy v1.12.0
 	github.com/pkg/errors v0.9.1
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/samber/lo v1.38.1
 	github.com/spf13/cobra v1.7.0
-	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
 )

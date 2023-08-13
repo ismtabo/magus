@@ -13,7 +13,8 @@ import (
 
 func TestFromFile(t *testing.T) {
 	t.Run("it should return the variables from a yaml file", func(t *testing.T) {
-		path := filepath.Join(t.TempDir(), "vars.yaml")
+		cwd := t.TempDir()
+		path := filepath.Join(cwd, "vars.yaml")
 		data := []byte(dedent.Dedent(`
 		foo: bar
 		baz: qux
@@ -22,7 +23,7 @@ func TestFromFile(t *testing.T) {
 			t.Fatal(err)
 		}
 		ctx := context.New()
-		ctx = ctx.WithCwd(t.TempDir())
+		ctx = ctx.WithCwd(cwd)
 		expected := variable.Variables{
 			variable.NewLiteralVariable("foo", "bar"),
 			variable.NewLiteralVariable("baz", "qux"),
@@ -35,13 +36,14 @@ func TestFromFile(t *testing.T) {
 	})
 
 	t.Run("it should return the variables from a json file", func(t *testing.T) {
-		path := filepath.Join(t.TempDir(), "vars.json")
+		cwd := t.TempDir()
+		path := filepath.Join(cwd, "vars.json")
 		data := []byte(dedent.Dedent(`{ "foo": "bar", "baz": "qux" }`))
 		if err := os.WriteFile(path, data, 0755); err != nil {
 			t.Fatal(err)
 		}
 		ctx := context.New()
-		ctx = ctx.WithCwd(t.TempDir())
+		ctx = ctx.WithCwd(cwd)
 		expected := variable.Variables{
 			variable.NewLiteralVariable("foo", "bar"),
 			variable.NewLiteralVariable("baz", "qux"),
@@ -54,9 +56,10 @@ func TestFromFile(t *testing.T) {
 	})
 
 	t.Run("it should return an error if the file is not a yaml file or a json file", func(t *testing.T) {
-		path := filepath.Join(t.TempDir(), "vars.txt")
+		cwd := t.TempDir()
+		path := filepath.Join(cwd, "vars.txt")
 		ctx := context.New()
-		ctx = ctx.WithCwd(t.TempDir())
+		ctx = ctx.WithCwd(cwd)
 
 		_, err := variable.FromFile(ctx, path)
 
@@ -74,7 +77,8 @@ func TestFromFile(t *testing.T) {
 	})
 
 	t.Run("it should return an error if the file is not a valid yaml file", func(t *testing.T) {
-		path := filepath.Join(t.TempDir(), "invalid-vars.yaml")
+		cwd := t.TempDir()
+		path := filepath.Join(cwd, "invalid-vars.yaml")
 		data := []byte(dedent.Dedent(`
 			foo: "
 		`))
@@ -82,7 +86,7 @@ func TestFromFile(t *testing.T) {
 			t.Fatal(err)
 		}
 		ctx := context.New()
-		ctx = ctx.WithCwd(t.TempDir())
+		ctx = ctx.WithCwd(cwd)
 
 		_, err := variable.FromFile(ctx, path)
 
@@ -90,7 +94,8 @@ func TestFromFile(t *testing.T) {
 	})
 
 	t.Run("it should return an error if the file is not a valid json file", func(t *testing.T) {
-		path := filepath.Join(t.TempDir(), "invalid-vars.json")
+		cwd := t.TempDir()
+		path := filepath.Join(cwd, "invalid-vars.json")
 		data := []byte(dedent.Dedent(`
 		{
 			"foo": ""
@@ -99,7 +104,7 @@ func TestFromFile(t *testing.T) {
 			t.Fatal(err)
 		}
 		ctx := context.New()
-		ctx = ctx.WithCwd(t.TempDir())
+		ctx = ctx.WithCwd(cwd)
 
 		_, err := variable.FromFile(ctx, path)
 
