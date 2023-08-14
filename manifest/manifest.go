@@ -9,7 +9,7 @@ type Manifest struct {
 	// File is the file of the manifest.
 	file.File `yaml:"-"`
 	// Version is the version of the manifest.
-	Version string `yaml:"version" validate:"required"`
+	Version Version `yaml:"version" validate:"required,semver"`
 	// Name is the name of the manifest.
 	Name string `yaml:"name" validate:"required"`
 	// Root is the output root dir of the manifest.

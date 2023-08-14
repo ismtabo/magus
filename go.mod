@@ -3,6 +3,7 @@ module github.com/ismtabo/magus
 go 1.20
 
 require (
+	github.com/Masterminds/semver v1.5.0
 	github.com/go-playground/validator/v10 v10.15.0
 	github.com/go-task/slim-sprig v2.20.0+incompatible
 	github.com/gookit/goutil v0.6.11
@@ -12,7 +13,6 @@ require (
 
 require (
 	github.com/Masterminds/goutils v1.1.1 // indirect
-	github.com/Masterminds/semver v1.5.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
@@ -35,6 +35,7 @@ require (
 	github.com/carlmjohnson/versioninfo v0.22.5
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/iancoleman/strcase v0.3.0
+	github.com/jinzhu/copier v0.3.5
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/otiai10/copy v1.12.0
 	github.com/pkg/errors v0.9.1

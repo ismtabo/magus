@@ -83,7 +83,7 @@ func runGenerate(cmd *cobra.Command, args []string) error {
 	if err := manifest.Unmarshal(ctx, m_file, &mf); err != nil {
 		return err
 	}
-	if err := validate.ValidateNoCycles(ctx, mf); err != nil {
+	if err := validate.NoCycles(ctx, mf); err != nil {
 		return err
 	}
 

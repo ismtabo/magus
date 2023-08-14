@@ -24,7 +24,7 @@ func TestValidateNoCycles(t *testing.T) {
 				},
 			},
 		}
-		assert.NoError(t, validate.ValidateNoCycles(context.New(), mf))
+		assert.NoError(t, validate.NoCycles(context.New(), mf))
 	})
 
 	t.Run("it should return nil if there are no cycles", func(t *testing.T) {
@@ -68,7 +68,7 @@ func TestValidateNoCycles(t *testing.T) {
 				},
 			},
 		}
-		assert.NoError(t, validate.ValidateNoCycles(ctx, mf))
+		assert.NoError(t, validate.NoCycles(ctx, mf))
 	})
 
 	t.Run("it should return err if magic cast file does not exists", func(t *testing.T) {
@@ -86,7 +86,7 @@ func TestValidateNoCycles(t *testing.T) {
 			},
 		}
 
-		err := validate.ValidateNoCycles(ctx, mf)
+		err := validate.NoCycles(ctx, mf)
 		assert.Error(t, err)
 	})
 
@@ -119,7 +119,7 @@ func TestValidateNoCycles(t *testing.T) {
 			},
 		}
 
-		err := validate.ValidateNoCycles(ctx, mf)
+		err := validate.NoCycles(ctx, mf)
 		assert.Error(t, err)
 		assert.EqualError(t, err, fmt.Sprintf("already imported %s", filepath.Join(cwd, "manifest.yaml")))
 	})
@@ -167,7 +167,7 @@ func TestValidateNoCycles(t *testing.T) {
 			},
 		}
 
-		err := validate.ValidateNoCycles(ctx, mf)
+		err := validate.NoCycles(ctx, mf)
 		assert.Error(t, err)
 		assert.EqualError(t, err, fmt.Sprintf("already imported %s", filepath.Join(cwd, "manifest.yaml")))
 	})
@@ -229,7 +229,7 @@ func TestValidateNoCycles(t *testing.T) {
 			},
 		}
 
-		err := validate.ValidateNoCycles(ctx, mf)
+		err := validate.NoCycles(ctx, mf)
 		assert.Error(t, err)
 		assert.EqualError(t, err, fmt.Sprintf("already imported %s", filepath.Join(cwd, "manifest.yaml")))
 	})

@@ -82,6 +82,12 @@ const config = {
           },
           // {to: '/blog', label: 'Blog', position: 'left'},
           {
+            type: 'docsVersionDropdown',
+            position: 'right',
+            dropdownItemsAfter: [{to: '/versions', label: 'All versions'}],
+            dropdownActiveClassDisabled: true,
+          },
+          {
             href: 'https://pkg.go.dev/github.com/ismtabo/magus',
             label: 'GoDoc',
             position: 'right',

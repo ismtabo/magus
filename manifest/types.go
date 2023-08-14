@@ -3,6 +3,7 @@ package manifest
 import (
 	"reflect"
 
+	"github.com/Masterminds/semver"
 	"gopkg.in/yaml.v3"
 )
 
@@ -40,4 +41,22 @@ func (e EitherStringOrStruct[T]) FromStruct(s T) EitherStringOrStruct[T] {
 		Struct: s,
 		is_map: true,
 	}
+}
+
+// Version is the version of the manifest.
+type Version struct {
+	*semver.Version
+}
+
+func (v *Version) UnmarshalYAML(node *yaml.Node) error {
+	var version string
+	if err := node.Decode(&version); err != nil {
+		return err
+	}
+	vv, err := semver.NewVersion(version)
+	if err != nil {
+		return err
+	}
+	v.Version = vv
+	return nil
 }

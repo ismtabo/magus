@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/Masterminds/semver"
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/domain"
 	"github.com/ismtabo/magus/file"
@@ -22,7 +23,7 @@ func TestGenerate(t *testing.T) {
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
 			File:    file.NewFile("manifest.yaml", nil),
-			Version: "1",
+			Version: manifest.Version{semver.MustParse("1")},
 			Name:    "test",
 			Root:    ".",
 			Variables: []manifest.Variable{
@@ -73,7 +74,7 @@ func TestGenerate(t *testing.T) {
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
 			File:    file.NewFile("manifest.yaml", nil),
-			Version: "1",
+			Version: manifest.Version{Version: semver.MustParse("1")},
 			Name:    "test",
 			Root:    "out",
 			Variables: []manifest.Variable{
@@ -125,7 +126,7 @@ func TestGenerate(t *testing.T) {
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
 			File:    file.NewFile("manifest.yaml", nil),
-			Version: "1",
+			Version: manifest.Version{Version: semver.MustParse("1")},
 			Name:    "test",
 			Root:    ".",
 			Variables: []manifest.Variable{
@@ -185,7 +186,7 @@ func TestGenerate(t *testing.T) {
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
 			File:    file.NewFile("manifest.yaml", nil),
-			Version: "1",
+			Version: manifest.Version{Version: semver.MustParse("1")},
 			Name:    "test",
 			Root:    ".",
 			Variables: []manifest.Variable{
@@ -243,7 +244,7 @@ func TestGenerate(t *testing.T) {
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
 			File:    file.NewFile("manifest.yaml", nil),
-			Version: "1",
+			Version: manifest.Version{Version: semver.MustParse("1")},
 			Name:    "test",
 			Root:    ".",
 			Variables: []manifest.Variable{
@@ -316,7 +317,7 @@ func TestGenerate(t *testing.T) {
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
 			File:    file.NewFile("manifest.yaml", nil),
-			Version: "1",
+			Version: manifest.Version{Version: semver.MustParse("1")},
 			Name:    "test",
 			Root:    ".",
 			Variables: []manifest.Variable{
@@ -380,7 +381,7 @@ func TestGenerate(t *testing.T) {
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
 			File:      file.NewFile("manifest.yaml", nil),
-			Version:   "1",
+			Version:   manifest.Version{Version: semver.MustParse("1")},
 			Name:      "test",
 			Root:      ".",
 			Variables: []manifest.Variable{},
@@ -409,7 +410,7 @@ func TestGenerate(t *testing.T) {
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
 			File:      file.NewFile("manifest.yaml", nil),
-			Version:   "1",
+			Version:   manifest.Version{Version: semver.MustParse("1")},
 			Name:      "test",
 			Root:      ".",
 			Variables: []manifest.Variable{},
@@ -445,7 +446,7 @@ func TestGenerate(t *testing.T) {
 		ctx = ctx.WithCwd(cwd)
 		mfst := manifest.Manifest{
 			File:      file.NewFile("manifest.yaml", nil),
-			Version:   "1",
+			Version:   manifest.Version{Version: semver.MustParse("1")},
 			Name:      "test",
 			Root:      ".",
 			Variables: []manifest.Variable{},

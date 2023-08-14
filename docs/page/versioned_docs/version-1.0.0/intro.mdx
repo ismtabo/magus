@@ -1,0 +1,139 @@
+---
+sidebar_position: 1
+---
+
+import ReleasesPageLink from '@site/src/components/ReleasesPageLink';
+
+
+# Tutorial Intro
+
+Let's discover **Magus in less than 5 minutes**.
+
+## Getting Started
+
+Get started by **creating a new manifest**.
+
+### What you'll need
+
+- Magus CLI, install it downloading the latest release from <ReleasesPageLink title="here"/> 
+or using `go install github.com/ismtabo/magus@latest`.
+
+## Create a new manifest 📜
+
+To create a new manifest create a YAML file with the following content:
+
+```yaml
+version: "1"
+name: hello-world
+root: .
+casts:
+  hello-world:
+    to: ./hello-world.md
+    from: |
+      # Hello World
+      This is my first cast!
+```
+
+This manifest represents a magic, a set of casts that will generate a source file from the template you define.
+
+Each cast have a `to` and a `from` field. The `to` field is the path where the cast will generate the source file. The `from` field is the template that will be used to generate the source file.
+
+In addition, cast may be conditionally rendered or generated for a bunch of items from a collection. We will see this later.
+
+## Spell your casts 🧙
+
+Now that you have a manifest, you can **spell your casts**.
+
+```bash
+magus generate hello-world.yaml
+```
+
+This command will generate the source files from the casts defined in the manifest, and will print the result in the standard output.
+
+```markdown
+<!-- file: hello-world.md -->
+# Hello World
+
+This is my first cast!
+```
+
+See the [Casts](./concepts/casts.md) section in the docs for more information.
+
+## Using variables
+
+You can use variables in your casts. Variables are defined in the manifest and can be used in the casts. These variables are contained 
+in the `variables` field of the manifest and at each `cast`.
+
+```yaml
+version: "1"
+name: hello-world
+root: .
+variables:
+  - name: "name"
+    value: "World"
+casts:
+  hello-world:
+    to: ./hello-world.md
+    from: |
+      # Hello {{ .name }}
+      {{ .description }}
+    variables:
+      - name: "description"
+        value: "This is my first cast!"
+```
+
+If you run again the `generate` command, you will see that the `name` variable is used in the cast.
+
+```bash
+magus generate hello-world.yaml
+```
+
+```markdown
+<!-- file: hello-world.md -->
+# Hello World
+This is my first cast!
+```
+
+By default, Magus will use the `variables` defined in the manifest. However, you can override these variables by passing them as flags to the `generate` command.
+
+```bash
+magus generate hello-world.yaml --var name=Magus
+```
+
+```markdown
+<!-- file: hello-world.md -->
+# Hello Magus
+This is my first cast!
+```
+
+**Caveat:** flag variables will be considered as strings. If you need to use a different type, you can use the `--var-file` flag to pass a YAML or a JSON file with the variables.
+
+```bash
+magus generate hello-world.yaml --var-file variables.yaml --var-file variables.json
+```
+
+```yaml
+# file: variables.yaml
+name: Magus
+number: 100
+boolean: true
+```
+
+```json
+// file: variables.json
+{
+  "name": "Magus",
+  "number": 100,
+  "boolean": true
+}
+```
+
+See the [Variables](./concepts/variables.md) section in the docs for more information.
+
+## Validating your manifest
+
+You can validate your manifest using the `validate` command.
+
+```bash
+magus validate hello-world.yaml
+```

@@ -19,22 +19,20 @@ func TestFromManifest(t *testing.T) {
 	t.Run("it should create a magic from a manifest", func(t *testing.T) {
 		ctx := context.New().WithCwd(t.TempDir())
 		mf := manifest.Manifest{
-			File:    file.NewFile("test", nil),
-			Version: "1.0.0",
-			Name:    "test",
+			File: file.NewFile("test", nil),
+			Name: "test",
 		}
 
 		m := manifest.NewMagic(ctx, mf)
 
-		assert.Equal(t, magic.NewMagic("1.0.0", "test", []variable.Variable{}, []cast.Cast{}), m)
+		assert.Equal(t, magic.NewMagic("test", []variable.Variable{}, []cast.Cast{}), m)
 	})
 
 	t.Run("it should create a magic from a manifest with variables", func(t *testing.T) {
 		ctx := context.New().WithCwd(t.TempDir())
 		mf := manifest.Manifest{
-			File:    file.NewFile("test", nil),
-			Version: "1.0.0",
-			Name:    "test",
+			File: file.NewFile("test", nil),
+			Name: "test",
 			Variables: manifest.Variables{
 				{
 					Name:  "name",
@@ -45,7 +43,7 @@ func TestFromManifest(t *testing.T) {
 
 		m := manifest.NewMagic(ctx, mf)
 
-		assert.Equal(t, magic.NewMagic("1.0.0", "test", []variable.Variable{
+		assert.Equal(t, magic.NewMagic("test", []variable.Variable{
 			variable.NewLiteralVariable("name", "value"),
 		}, []cast.Cast{}), m)
 	})
@@ -55,9 +53,8 @@ func TestFromManifest(t *testing.T) {
 		ctx = imports.WithCtx(ctx)
 		f := file.NewFile("test", nil)
 		mf := manifest.Manifest{
-			File:    f,
-			Version: "1.0.0",
-			Name:    "test",
+			File: f,
+			Name: "test",
 			Casts: manifest.Casts{
 				"cast": manifest.Cast{
 					To:   "to",
@@ -68,7 +65,7 @@ func TestFromManifest(t *testing.T) {
 
 		m := manifest.NewMagic(ctx, mf)
 
-		assert.Equal(t, magic.NewMagic("1.0.0", "test", []variable.Variable{}, []cast.Cast{
+		assert.Equal(t, magic.NewMagic("test", []variable.Variable{}, []cast.Cast{
 			cast.NewBaseCast(source.NewTemplateSource("from"), template.NewTemplatedPath("to"), variable.Variables{}),
 		}), m)
 	})
@@ -82,9 +79,8 @@ func TestFromManifest(t *testing.T) {
 			t.Fatal(err)
 		}
 		mf := manifest.Manifest{
-			File:    f,
-			Version: "1.0.0",
-			Name:    "test",
+			File: f,
+			Name: "test",
 		}
 		assert.Panics(t, func() {
 			manifest.NewMagic(ctx, mf)

@@ -28,5 +28,5 @@ func NewMagic(ctx context.Context, mf Manifest) magic.Magic {
 			casts = append(casts, NewCast(ctx, c))
 		}
 	}
-	return magic.NewMagic(mf.Version, mf.Name, vv, casts)
+	return magic.NewMagic(mf.Name, vv, casts)
 }
