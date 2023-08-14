@@ -7,7 +7,11 @@ description: "Validate command"
 
 ## Overview
 
-The `validate` command is used to validate a manifest.
+The `validate` command is used to validate a manifest. The validation does following checks:
+
+- Checks if the manifest has valid schema.
+- Checks if the manifest version is supported.
+- Checks if the manifest does not contains cycles in dependencies. See more at [Magic Sources](./concepts/sources.md#magic-sources).
 
 ## Usage
 

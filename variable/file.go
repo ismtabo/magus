@@ -1,9 +1,11 @@
 package variable
 
 import (
+	"encoding/json"
 	"strings"
 
 	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/file"
 	"github.com/ismtabo/magus/fs"
 	go_errors "github.com/pkg/errors"
 	"gopkg.in/yaml.v3"
@@ -20,7 +22,7 @@ func FromFile(ctx context.Context, path string) (Variables, error) {
 		return nil, err
 	}
 	tmpVars := map[string]any{}
-	if err := yaml.Unmarshal(file.Bytes(), &tmpVars); err != nil {
+	if err := unmarshall(file, &tmpVars); err != nil {
 		// TODO: wrap error
 		return nil, err
 	}
@@ -29,4 +31,19 @@ func FromFile(ctx context.Context, path string) (Variables, error) {
 		vars = append(vars, NewLiteralVariable(k, v))
 	}
 	return vars, nil
+}
+
+func unmarshall(f file.File, v interface{}) error {
+	if strings.HasSuffix(f.Path(), ".json") {
+		return unmarshalJSON(f.Bytes(), v)
+	}
+	return unmarshalYAML(f.Bytes(), v)
+}
+
+func unmarshalJSON(data []byte, v interface{}) error {
+	return json.Unmarshal(data, v)
+}
+
+func unmarshalYAML(data []byte, v interface{}) error {
+	return yaml.Unmarshal(data, v)
 }
