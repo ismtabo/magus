@@ -4,6 +4,7 @@ import (
 	"github.com/ismtabo/magus/cast"
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/file"
+	"github.com/ismtabo/magus/source"
 	"github.com/ismtabo/magus/variable"
 )
 
@@ -13,21 +14,20 @@ type MagicRenderOptions struct {
 
 type Magic interface {
 	Render(ctx context.Context, opts MagicRenderOptions) ([]file.File, error)
+	source.Source
 }
 
 type magic struct {
-	version string
-	name    string
-	vars    []variable.Variable
-	casts   []cast.Cast
+	name  string
+	vars  []variable.Variable
+	casts []cast.Cast
 }
 
-func NewMagic(version, name string, vars []variable.Variable, casts []cast.Cast) Magic {
+func NewMagic(name string, vars []variable.Variable, casts []cast.Cast) Magic {
 	return &magic{
-		version: version,
-		name:    name,
-		vars:    vars,
-		casts:   casts,
+		name:  name,
+		vars:  vars,
+		casts: casts,
 	}
 }
 
@@ -59,4 +59,8 @@ func (m *magic) Render(ctx context.Context, opts MagicRenderOptions) ([]file.Fil
 		files = append(files, result...)
 	}
 	return files, nil
+}
+
+func (m *magic) Compile(ctx context.Context, dest string) ([]file.File, error) {
+	return m.Render(ctx.WithCwd(dest), MagicRenderOptions{})
 }

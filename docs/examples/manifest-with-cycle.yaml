@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../schema/magic.json
+version: "v1"
+name: "Manifest with cycle"
+root: "."
+casts:
+  cycle:
+    to: "./salute.md"
+    from:
+      magic: ./manifest-with-cycle.yaml

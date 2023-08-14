@@ -1,4 +1,4 @@
-package variable_test
+package manifest_test
 
 import (
 	"testing"
@@ -14,7 +14,7 @@ func TestNewVariable(t *testing.T) {
 			Name:  "name",
 			Value: "value",
 		}
-		actual := variable.NewVariable(v)
+		actual := manifest.NewVariable(v)
 
 		assert.Implements(t, (*variable.Variable)(nil), actual)
 		assert.IsType(t, (*variable.LiteralVariable)(nil), actual)
@@ -26,7 +26,7 @@ func TestNewVariable(t *testing.T) {
 			Name: "name",
 			Env:  "env",
 		}
-		actual := variable.NewVariable(v)
+		actual := manifest.NewVariable(v)
 
 		assert.Implements(t, (*variable.Variable)(nil), actual)
 		assert.IsType(t, (*variable.EnvironmentVariable)(nil), actual)
@@ -38,7 +38,7 @@ func TestNewVariable(t *testing.T) {
 			Name:     "name",
 			Template: "template",
 		}
-		actual := variable.NewVariable(v)
+		actual := manifest.NewVariable(v)
 
 		assert.Implements(t, (*variable.Variable)(nil), actual)
 		assert.IsType(t, (*variable.TemplateVariable)(nil), actual)
@@ -49,7 +49,7 @@ func TestNewVariable(t *testing.T) {
 		v := manifest.Variable{
 			Name: "name",
 		}
-		actual := variable.NewVariable(v)
+		actual := manifest.NewVariable(v)
 
 		assert.Implements(t, (*variable.Variable)(nil), actual)
 		assert.IsType(t, (*variable.LiteralVariable)(nil), actual)
@@ -69,7 +69,7 @@ func TestNewVariables(t *testing.T) {
 				Value: "value2",
 			},
 		}
-		actual := variable.NewVariables(vs)
+		actual := manifest.NewVariables(vs)
 
 		assert.Len(t, actual, 2)
 		assert.Equal(t, "name1", actual[0].Name())

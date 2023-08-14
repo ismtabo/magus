@@ -3,6 +3,7 @@ package manifest_test
 import (
 	"testing"
 
+	"github.com/Masterminds/semver"
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/manifest"
 	"github.com/lithammer/dedent"
@@ -23,7 +24,7 @@ func TestUnmarshalYAML(t *testing.T) {
 		err := manifest.UnmarshalYAML(ctx, y, m)
 
 		assert.NoError(t, err)
-		assert.Equal(t, "0.1.0", m.Version)
+		assert.Equal(t, manifest.Version{semver.MustParse("0.1.0")}, m.Version)
 		assert.Equal(t, "magus", m.Name)
 		assert.Equal(t, ".", m.Root)
 		assert.Nil(t, m.Variables)
@@ -72,9 +73,6 @@ func TestUnmarshalYAML(t *testing.T) {
 		err := manifest.UnmarshalYAML(ctx, y, m)
 
 		assert.NoError(t, err)
-		assert.Equal(t, "0.1.0", m.Version)
-		assert.Equal(t, "magus", m.Name)
-		assert.Equal(t, ".", m.Root)
 		assert.Equal(t, 3, len(m.Variables))
 		assert.Equal(t, "foo", m.Variables[0].Name)
 		assert.Equal(t, "bar", m.Variables[0].Value)
@@ -138,14 +136,11 @@ func TestUnmarshalYAML(t *testing.T) {
 		err := manifest.UnmarshalYAML(ctx, y, m)
 
 		assert.NoError(t, err)
-		assert.Equal(t, "0.1.0", m.Version)
-		assert.Equal(t, "magus", m.Name)
-		assert.Equal(t, ".", m.Root)
 		assert.Equal(t, 8, len(m.Casts))
 		assert.Equal(t, "foo", m.Casts["base"].To)
-		assert.Equal(t, "bar", m.Casts["base"].From)
+		assert.Equal(t, manifest.Source{}.FromString("bar"), m.Casts["base"].From)
 		assert.Equal(t, "foo", m.Casts["with-variables"].To)
-		assert.Equal(t, "bar", m.Casts["with-variables"].From)
+		assert.Equal(t, manifest.Source{}.FromString("bar"), m.Casts["with-variables"].From)
 		assert.Equal(t, 3, len(m.Casts["with-variables"].Variables))
 		assert.Equal(t, "foo", m.Casts["with-variables"].Variables[0].Name)
 		assert.Equal(t, "bar", m.Casts["with-variables"].Variables[0].Value)
@@ -292,6 +287,71 @@ func TestUnmarshalYAML(t *testing.T) {
 		    each: "{{ .qux }}"
 		    include: "{{ .quuz }}"
 		    omit: "{{ .corge }}"
+		`))
+		ctx := context.New()
+
+		err := manifest.UnmarshalYAML(ctx, y, m)
+
+		assert.Error(t, err)
+	})
+
+	t.Run("it should marshal magic sources", func(t *testing.T) {
+		m := &manifest.Manifest{}
+		y := []byte(dedent.Dedent(`
+		---
+		version: 0.1.0
+		name: magus
+		root: .
+		casts:
+		  foo:
+		    to: bar
+		    from:
+		      magic: foo
+		`))
+		ctx := context.New()
+
+		err := manifest.UnmarshalYAML(ctx, y, m)
+
+		assert.NoError(t, err)
+		assert.Equal(t, manifest.Source{}.FromStruct(
+			manifest.MagicSource{
+				Magic: "foo",
+			},
+		), m.Casts["foo"].From)
+	})
+
+	t.Run("it should return error if magic source is empty", func(t *testing.T) {
+		m := &manifest.Manifest{}
+		y := []byte(dedent.Dedent(`
+		---
+		version: 0.1.0
+		name: magus
+		root: .
+		casts:
+		  foo:
+		    to: bar
+		    from:
+		      magic: ""
+		`))
+		ctx := context.New()
+
+		err := manifest.UnmarshalYAML(ctx, y, m)
+
+		assert.Error(t, err)
+	})
+
+	t.Run("it should return error if magic source is invalid", func(t *testing.T) {
+		m := &manifest.Manifest{}
+		y := []byte(dedent.Dedent(`
+		---
+		version: 0.1.0
+		name: magus
+		root: .
+		casts:
+		  foo:
+		    to: bar
+		    from:
+		      magic: []
 		`))
 		ctx := context.New()
 

@@ -40,6 +40,15 @@ func With(ctx go_context.Context) Context {
 	}
 }
 
+func WithValue(ctx Context, key, val any) Context {
+	return &context{
+		Context:   go_context.WithValue(ctx, key, val),
+		cwd:       ctx.Cwd(),
+		variables: ctx.Variables(),
+		helpers:   ctx.Helpers(),
+	}
+}
+
 func (ctx *context) Cwd() string {
 	return ctx.cwd
 }
