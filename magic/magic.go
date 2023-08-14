@@ -18,18 +18,16 @@ type Magic interface {
 }
 
 type magic struct {
-	version string
-	name    string
-	vars    []variable.Variable
-	casts   []cast.Cast
+	name  string
+	vars  []variable.Variable
+	casts []cast.Cast
 }
 
-func NewMagic(version, name string, vars []variable.Variable, casts []cast.Cast) Magic {
+func NewMagic(name string, vars []variable.Variable, casts []cast.Cast) Magic {
 	return &magic{
-		version: version,
-		name:    name,
-		vars:    vars,
-		casts:   casts,
+		name:  name,
+		vars:  vars,
+		casts: casts,
 	}
 }
 

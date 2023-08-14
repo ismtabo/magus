@@ -9,7 +9,7 @@ import (
 	"github.com/ismtabo/magus/manifest"
 )
 
-func ValidateNoCycles(ctx context.Context, mf manifest.Manifest) error {
+func NoCycles(ctx context.Context, mf manifest.Manifest) error {
 	ctx = imports.WithCtx(ctx)
 	svc := imports.Ctx(ctx)
 	_ = svc.Add(ctx, imports.NewImport(nil, mf.File))
@@ -27,7 +27,7 @@ func ValidateNoCycles(ctx context.Context, mf manifest.Manifest) error {
 		if err := manifest.Unmarshal(ctx, path, &cmf); err != nil {
 			return err
 		}
-		if err := ValidateNoCycles(ctx, cmf); err != nil {
+		if err := NoCycles(ctx, cmf); err != nil {
 			return err
 		}
 	}

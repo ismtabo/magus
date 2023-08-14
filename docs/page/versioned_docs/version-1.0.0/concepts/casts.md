@@ -24,7 +24,7 @@ Destination is a path where the cast should be generated. It **must** be relativ
 
 ## Cast source (from)
 
-Source defined the content of the cast that should be rendered. In [v1](../../versioned_docs/version-1.0.0/concepts/casts.md#cast-source-from), source can just be defined by templated strings. Now, sources can also be defined by referencing to other magic manifest. See more in [Sources](./sources.md) page.
+Source is a template that should be generated. The source will be rendered using the [Go templates](https://pkg.go.dev/text/template) package. The source may be templated using the [Variables](/docs/concepts/variables) section at root level and from the cast context.
 
 ## Cast variables
 
@@ -36,36 +36,6 @@ Variables are used to provide data for cast generation. They can be used in the 
 version: 1
 name: My Project
 root: ./generated
-casts:
-  hello-world:
-    to: ./hello-world
-    from: |
-      Hello {{ .project_name }}!
-    variables:
-      - name: project_name
-        value: My Project
-```
-
-### Example using magic sources
-
-```yaml
----
-# file: manifest.yaml
-version: 1
-name: My Project
-root: .
-casts:
-  hello-world:
-    to: ./hello-world
-    from:
-      magic: ./hello-world.yaml
-    variables:
-      - name: project_name
-        value: My Project
-# file: hello-world.yaml
-version: 1
-name: Hello World
-root: .
 casts:
   hello-world:
     to: ./hello-world

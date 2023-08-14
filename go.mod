@@ -3,6 +3,7 @@ module github.com/ismtabo/magus
 go 1.20
 
 require (
+	github.com/Masterminds/semver v1.5.0
 	github.com/Masterminds/sprig/v3 v3.2.3
 	github.com/go-playground/validator/v10 v10.15.0
 	github.com/gookit/goutil v0.6.11

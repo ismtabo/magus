@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/Masterminds/semver"
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/manifest"
 	"github.com/lithammer/dedent"
@@ -30,7 +31,7 @@ func TestUnmarshal(t *testing.T) {
 		err := manifest.Unmarshal(ctx, fp, m)
 
 		assert.NoError(t, err)
-		assert.Equal(t, "0.1.0", m.Version)
+		assert.Equal(t, manifest.Version{semver.MustParse("0.1.0")}, m.Version)
 		assert.Equal(t, "magus", m.Name)
 		assert.Equal(t, ".", m.Root)
 		assert.Nil(t, m.Variables)
