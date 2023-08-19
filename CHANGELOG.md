@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Security
 
+## [1.0.5] - (2023-08-19)
+
+### Fixed
+
+*   fix: render options variables before magic variables
+
 ## [1.0.4] - (2023-08-07)
 
 ### Fixed

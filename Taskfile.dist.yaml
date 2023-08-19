@@ -112,3 +112,21 @@ tasks:
         - VERSION
         - CHANGELOG
         - TARGET_DIR
+  hotfix:
+    desc: Create hotfix branch
+    cmds:
+      - git switch -c hotfix/{{.PATCH_VERSION}}
+    vars:
+      VERSION:
+        sh: git describe --tags --match "*.*.*" --candidates 1 | sed -e 's/^v//'
+      PATCH_VERSION:
+        sh: semver bump patch {{.VERSION}}
+  fix:
+    desc: Create fix branch
+    cmds:
+      - git switch main
+      - git pull
+      - git switch -c fix/{{.PATCH_VERSION}}
+    requires:
+      vars:
+        - PATCH_VERSION

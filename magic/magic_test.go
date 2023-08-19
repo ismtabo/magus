@@ -61,6 +61,40 @@ func TestMagic_Render(t *testing.T) {
 		}, files)
 	})
 
+	t.Run("should render a magic with variables and casts and render options", func(t *testing.T) {
+		m := magic.NewMagic("1.0.0", "test", []variable.Variable{}, []cast.Cast{
+			cast.NewBaseCast(source.NewTemplateSource("{{ .name }}"), template.NewTemplatedPath("test"), variable.Variables{}),
+		})
+		files, err := m.Render(context.New(), magic.MagicRenderOptions{
+			Variables: variable.Variables{
+				variable.NewLiteralVariable("name", "Jane Doe"),
+			},
+		})
+
+		assert.NoError(t, err)
+		assert.Equal(t, []file.File{
+			file.NewTextFile("test", "Jane Doe"),
+		}, files)
+	})
+
+	t.Run("should render option variables before magic variables", func(t *testing.T) {
+		m := magic.NewMagic("1.0.0", "test", []variable.Variable{
+			variable.NewTemplateVariable("name", "{{ .name }}"),
+		}, []cast.Cast{
+			cast.NewBaseCast(source.NewTemplateSource("{{ .name }}"), template.NewTemplatedPath("test"), variable.Variables{}),
+		})
+		files, err := m.Render(context.New(), magic.MagicRenderOptions{
+			Variables: variable.Variables{
+				variable.NewLiteralVariable("name", "Jane Doe"),
+			},
+		})
+
+		assert.NoError(t, err)
+		assert.Equal(t, []file.File{
+			file.NewTextFile("test", "Jane Doe"),
+		}, files)
+	})
+
 	t.Run("should return an error if a variable fails to render", func(t *testing.T) {
 		m := magic.NewMagic("1.0.0", "test", []variable.Variable{
 			variable.NewTemplateVariable("age", "{{ .name }"),
