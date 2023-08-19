@@ -33,14 +33,6 @@ func NewMagic(version, name string, vars []variable.Variable, casts []cast.Cast)
 
 func (m *magic) Render(ctx context.Context, opts MagicRenderOptions) ([]file.File, error) {
 	files := []file.File{}
-	for _, v := range m.vars {
-		value, err := v.Value(ctx)
-		if err != nil {
-			// TODO: Wrap error
-			return nil, err
-		}
-		ctx = ctx.WithVariable(v.Name(), value)
-	}
 	if opts.Variables != nil {
 		for _, v := range opts.Variables {
 			value, err := v.Value(ctx)
@@ -50,6 +42,14 @@ func (m *magic) Render(ctx context.Context, opts MagicRenderOptions) ([]file.Fil
 			}
 			ctx = ctx.WithVariable(v.Name(), value)
 		}
+	}
+	for _, v := range m.vars {
+		value, err := v.Value(ctx)
+		if err != nil {
+			// TODO: Wrap error
+			return nil, err
+		}
+		ctx = ctx.WithVariable(v.Name(), value)
 	}
 	for _, c := range m.casts {
 		result, err := c.Compile(ctx)

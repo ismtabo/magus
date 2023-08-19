@@ -11,6 +11,13 @@ tasks:
   changelog:get:
     silent: true
     desc: Get changelog for version
+    summary: |
+      Get changelog for version
+      Variables:
+        - VERSION: Version to get changelog for
+        - CHANGELOG: (optional) Path to changelog file
+      Example:
+        - task changelog:get VERSION=1.0.0 CHANGELOG=CHANGELOG.md
     cmds:
       - pnpm run --silent changelog get {{.VERSION}} --changelog {{.CHANGELOG}} --quiet
     requires:
@@ -20,6 +27,13 @@ tasks:
       SILENT: true
   changelog:create:
     desc: Create changelog for version
+    summary: |
+      Create changelog for version
+      Variables:
+        - VERSION: Version to create changelog for
+        - CHANGELOG: (optional) Path to changelog file
+      Example:
+        - task changelog:create VERSION=1.0.0 CHANGELOG=CHANGELOG.md
     cmds:
       - pnpm --silent run changelog create {{.VERSION}} {{.DATE}} --changelog {{.CHANGELOG}} --quiet
     requires:
