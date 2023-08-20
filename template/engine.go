@@ -8,12 +8,14 @@ import (
 	"github.com/ismtabo/magus/context"
 	"github.com/ismtabo/magus/errors"
 
-	sprig "github.com/go-task/slim-sprig"
+	"github.com/Masterminds/sprig/v3"
+	pluralize "github.com/gertd/go-pluralize"
 )
 
 const name = "magus/template"
 
 var (
+	pluralizer                   = pluralize.NewClient()
 	Engine        TemplateEngine = NewTemplateEngine()
 	default_funcs                = template.FuncMap{
 		"snake":    strcase.ToSnake,
@@ -21,6 +23,12 @@ var (
 		"pascal":   strcase.ToCamel,
 		"camel":    strcase.ToLowerCamel,
 		"kebab":    strcase.ToKebab,
+		"pluralize": func(s string) string {
+			return pluralizer.Plural(s)
+		},
+		"singularize": func(s string) string {
+			return pluralizer.Singular(s)
+		},
 	}
 	funcs = template.FuncMap{}
 )
@@ -29,7 +37,7 @@ func init() {
 	for k, v := range default_funcs {
 		funcs[k] = v
 	}
-	for k, v := range sprig.FuncMap() {
+	for k, v := range sprig.TxtFuncMap() {
 		funcs[k] = v
 	}
 }

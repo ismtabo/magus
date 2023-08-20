@@ -18,6 +18,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Security
 
+## [1.0.6] - (2023-08-20)
+
+### Added
+
+*   feat: add pluralize function from go-pluralize
+
+### Fixed
+
+*   fix: upgrade sprig to github.com/Masterminds/sprig/v3
+
 ## [1.0.5] - (2023-08-19)
 
 ### Fixed
