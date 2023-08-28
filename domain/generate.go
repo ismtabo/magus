@@ -37,16 +37,15 @@ func Generate(ctx context.Context, dest string, mfst manifest.Manifest, opts Gen
 	}
 
 	if !opts.Overwrite && !opts.Clean {
-		var err error
-		existent_files := []file.File{}
-		if existent_files, err = fs.ReadDir(ctx, dest, fs.ReadDirOptions{
+		existent_files, err := fs.ReadFiles(ctx.WithCwd(dest), files, fs.ReadFilesOptions{
 			NoFailOnMissing: true,
-		}); err != nil {
+		})
+		if err != nil {
 			return nil, err
 		}
-		files = lo.Filter[file.File](files, func(item file.File, index int) bool {
+		files = lo.Filter(files, func(item file.File, index int) bool {
 			file_path, _ := item.Abs(ctx)
-			return !lo.ContainsBy[file.File](existent_files, func(other file.File) bool {
+			return !lo.ContainsBy(existent_files, func(other file.File) bool {
 				other_path, _ := other.Abs(ctx)
 				return file_path == other_path
 			})
