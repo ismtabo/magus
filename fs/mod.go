@@ -56,6 +56,26 @@ func ReadDir(ctx context.Context, path string, opts ReadDirOptions) ([]file.File
 	return result, nil
 }
 
+type ReadFilesOptions struct {
+	NoFailOnMissing bool
+}
+
+func ReadFiles(ctx context.Context, files []file.File, opts ReadFilesOptions) ([]file.File, error) {
+	read_files := []file.File{}
+	for _, f := range files {
+		path, _ := f.Abs(ctx)
+		data, err := os.ReadFile(path)
+		if err != nil {
+			if os.IsNotExist(err) && opts.NoFailOnMissing {
+				continue
+			}
+			return nil, err
+		}
+		read_files = append(read_files, file.NewFile(path, data))
+	}
+	return read_files, nil
+}
+
 func WriteFiles(ctx context.Context, files []file.File) error {
 	for _, f := range files {
 		path, _ := f.Abs(ctx)
