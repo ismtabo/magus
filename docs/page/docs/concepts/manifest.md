@@ -111,7 +111,7 @@ Given the following variables, this manifest will generate a React component wit
 ```yaml
 version: "1"
 name: "react"
-root: "./{{ .name | kebab }}"
+root: "."
 casts:
   index.js:
     to: "./index.jsx"
