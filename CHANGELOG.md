@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Security
 
+## [1.0.7] - (2023-08-28)
+
+### Fixed
+
+*   fix: read target output files instead of whole output directory
+
 ## [1.0.6] - (2023-08-20)
 
 ### Added
