@@ -111,6 +111,73 @@ func TestReadDir(t *testing.T) {
 	})
 }
 
+func TestReadFiles(t *testing.T) {
+	t.Run("should return a list of files", func(t *testing.T) {
+		ctx := context.New()
+		dir := t.TempDir()
+		p1 := filepath.Join(dir, "file1.txt")
+		p2 := filepath.Join(dir, "file2.txt")
+		if err := os.WriteFile(p1, []byte("Hello, World!"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(p2, []byte("Hello, World!"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		files := []file.File{
+			file.NewFile(p1, []byte("Hello, World!")),
+			file.NewFile(p2, []byte("Hello, World!")),
+		}
+
+		read_files, err := fs.ReadFiles(ctx, files, fs.ReadFilesOptions{})
+
+		assert.NoError(t, err)
+		assert.Len(t, read_files, 2)
+		assert.Equal(t, p1, read_files[0].Path())
+		assert.Equal(t, p2, read_files[1].Path())
+	})
+
+	t.Run("should return a list of files even if some files do not exist and option NoFailOnMissing is true", func(t *testing.T) {
+		ctx := context.New()
+		dir := t.TempDir()
+		p1 := filepath.Join(dir, "file1.txt")
+		p2 := filepath.Join(dir, "file2.txt")
+		if err := os.WriteFile(p1, []byte("Hello, World!"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		files := []file.File{
+			file.NewFile(p1, []byte("Hello, World!")),
+			file.NewFile(p2, []byte("Hello, World!")),
+		}
+		opts := fs.ReadFilesOptions{
+			NoFailOnMissing: true,
+		}
+
+		read_files, err := fs.ReadFiles(ctx, files, opts)
+
+		assert.NoError(t, err)
+		assert.Len(t, read_files, 1)
+		assert.Equal(t, p1, read_files[0].Path())
+	})
+
+	t.Run("should return an error if some files do not exist", func(t *testing.T) {
+		ctx := context.New()
+		dir := t.TempDir()
+		p1 := filepath.Join(dir, "file1.txt")
+		p2 := filepath.Join(dir, "file2.txt")
+		if err := os.WriteFile(p1, []byte("Hello, World!"), 0644); err != nil {
+			t.Fatal(err)
+		}
+		files := []file.File{
+			file.NewFile(p1, []byte("Hello, World!")),
+			file.NewFile(p2, []byte("Hello, World!")),
+		}
+
+		_, err := fs.ReadFiles(ctx, files, fs.ReadFilesOptions{})
+
+		assert.Error(t, err)
+	})
+}
+
 func TestWriteFiles(t *testing.T) {
 	t.Run("should write a list of files", func(t *testing.T) {
 		ctx := context.New()
