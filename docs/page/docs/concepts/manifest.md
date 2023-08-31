@@ -150,6 +150,7 @@ casts:
           });
       });
   index.stories.js:
+    if: "{{ .stories }}"
     to: "./index.stories.jsx"
     from: |
       import React from 'react';
@@ -166,5 +167,4 @@ casts:
       Default.args = {
           name: '{{ .name | pascal }}',
       };
-      if: "{{ .stories }}"
 ```
