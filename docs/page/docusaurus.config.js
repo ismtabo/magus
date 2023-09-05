@@ -130,7 +130,7 @@ const config = {
       },
     }),
   customFields: {
-    description: 'Magus is a CLI tool that generates code for your Go projects.',
+    description: 'Magus is a CLI tool that generates code for your projects.',
     releasesPage: `https://github.com/ismtabo/magus/releases`
   }
 };
