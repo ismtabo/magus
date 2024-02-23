@@ -6,8 +6,8 @@ import (
 
 	go_errors "github.com/pkg/errors"
 
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/file"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/file"
 )
 
 func AssertNotHaveWriteConflicts(ctx context.Context, files []file.File) error {

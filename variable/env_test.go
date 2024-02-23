@@ -3,7 +3,7 @@ package variable_test
 import (
 	"testing"
 
-	"github.com/ismtabo/magus/variable"
+	"github.com/ismtabo/magus/v2/variable"
 	"github.com/stretchr/testify/assert"
 )
 

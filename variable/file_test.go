@@ -5,8 +5,8 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/variable"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/variable"
 	"github.com/lithammer/dedent"
 	"github.com/stretchr/testify/assert"
 )

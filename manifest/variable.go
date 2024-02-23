@@ -1,6 +1,6 @@
 package manifest
 
-import "github.com/ismtabo/magus/variable"
+import "github.com/ismtabo/magus/v2/variable"
 
 // New creates a new variable.
 func NewVariable(v Variable) variable.Variable {

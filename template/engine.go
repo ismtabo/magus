@@ -5,8 +5,8 @@ import (
 	"text/template"
 
 	"github.com/iancoleman/strcase"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/errors"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/errors"
 
 	"github.com/Masterminds/sprig/v3"
 	pluralize "github.com/gertd/go-pluralize"

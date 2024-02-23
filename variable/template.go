@@ -1,8 +1,8 @@
 package variable
 
 import (
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/template"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/template"
 )
 
 var _ Variable = &TemplateVariable{}

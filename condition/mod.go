@@ -1,6 +1,6 @@
 package condition
 
-import "github.com/ismtabo/magus/context"
+import "github.com/ismtabo/magus/v2/context"
 
 // Condition is a condition that can be evaluated.
 type Condition interface {

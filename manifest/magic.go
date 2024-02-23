@@ -1,11 +1,11 @@
 package manifest
 
 import (
-	"github.com/ismtabo/magus/cast"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/imports"
-	"github.com/ismtabo/magus/magic"
-	"github.com/ismtabo/magus/variable"
+	"github.com/ismtabo/magus/v2/cast"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/imports"
+	"github.com/ismtabo/magus/v2/magic"
+	"github.com/ismtabo/magus/v2/variable"
 )
 
 func NewMagic(ctx context.Context, mf Manifest) magic.Magic {

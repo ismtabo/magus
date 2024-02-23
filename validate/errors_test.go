@@ -3,7 +3,7 @@ package validate_test
 import (
 	"testing"
 
-	"github.com/ismtabo/magus/validate"
+	"github.com/ismtabo/magus/v2/validate"
 	"github.com/stretchr/testify/assert"
 )
 

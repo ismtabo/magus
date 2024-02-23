@@ -21,7 +21,7 @@ function HomepageHeader() {
           <div className={clsx("row row--align-center", styles[`row--justify-center`])}>
             <div className="col col--5">
               <Codeblock language="sh" >
-                {`go install github.com/ismtabo/magus@latest`}
+                {`go install github.com/ismtabo/magus/v2@latest`}
               </Codeblock>
             </div>
           </div>

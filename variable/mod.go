@@ -1,7 +1,7 @@
 package variable
 
 import (
-	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/v2/context"
 )
 
 // Variable is a variable that can be used in a template.

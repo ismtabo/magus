@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"strings"
 
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/file"
-	"github.com/ismtabo/magus/fs"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/file"
+	"github.com/ismtabo/magus/v2/fs"
 	go_errors "github.com/pkg/errors"
 	"gopkg.in/yaml.v3"
 )

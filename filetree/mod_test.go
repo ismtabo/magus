@@ -3,9 +3,9 @@ package filetree_test
 import (
 	"testing"
 
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/file"
-	"github.com/ismtabo/magus/filetree"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/file"
+	"github.com/ismtabo/magus/v2/filetree"
 	"github.com/stretchr/testify/assert"
 )
 

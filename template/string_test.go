@@ -6,8 +6,8 @@ import (
 	go_errors "errors"
 
 	"github.com/benbjohnson/immutable"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/template"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/template"
 	"github.com/stretchr/testify/assert"
 )
 

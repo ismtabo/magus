@@ -1,7 +1,7 @@
 version: "3"
 
 vars:
-  PACKAGE: github.com/ismtabo/magus
+  PACKAGE: github.com/ismtabo/magus/v2
   BINARY_NAME: magus
   TARGET_DIR: target
   VERSION:

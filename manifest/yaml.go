@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/v2/context"
 	"gopkg.in/yaml.v3"
 )
 

@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/benbjohnson/immutable"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/variable"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/variable"
 	"github.com/stretchr/testify/assert"
 )
 

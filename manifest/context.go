@@ -1,6 +1,6 @@
 package manifest
 
-import "github.com/ismtabo/magus/context"
+import "github.com/ismtabo/magus/v2/context"
 
 type contextKey = string
 

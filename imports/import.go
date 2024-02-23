@@ -1,6 +1,6 @@
 package imports
 
-import "github.com/ismtabo/magus/file"
+import "github.com/ismtabo/magus/v2/file"
 
 type Import interface {
 	From() file.File

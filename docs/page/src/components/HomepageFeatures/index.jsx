@@ -26,7 +26,7 @@ const FeatureList = [
     title: 'Zero Configuration',
     description: (
       <>
-        Magus requires no configuration. Just install it,
+        Magus requires no additional configuration. Just install it,
         write your own templates and start generating code.
       </>
     ),

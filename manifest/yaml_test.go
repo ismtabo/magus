@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/Masterminds/semver"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/manifest"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/manifest"
 	"github.com/lithammer/dedent"
 	"github.com/stretchr/testify/assert"
 )

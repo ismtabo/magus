@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/ismtabo/magus/config"
+	"github.com/ismtabo/magus/v2/config"
 	"github.com/spf13/cobra"
 )
 

@@ -1,6 +1,6 @@
 # MAGUS (MAgic Generation Utility for Source)
 
-[![GoDoc](https://godoc.org/github.com/ismtabo/magus?status.svg)](https://godoc.org/github.com/ismtabo/magus) [![Go Report Card](https://goreportcard.com/badge/github.com/ismtabo/magus)](https://goreportcard.com/report/github.com/ismtabo/magus)
+[![GoDoc](https://godoc.org/github.com/ismtabo/magus/v2?status.svg)](https://godoc.org/github.com/ismtabo/magus/v2) [![Go Report Card](https://goreportcard.com/badge/github.com/ismtabo/magus/v2)](https://goreportcard.com/report/github.com/ismtabo/magus/v2)
 
 MAGUS is a tool for automatically generating magic source files based on a manifest.
 
@@ -8,7 +8,7 @@ MAGUS is a tool for automatically generating magic source files based on a manif
 
 ### Using Go
 ```bash
-go install github.com/ismtabo/magus@latest
+go install github.com/ismtabo/magus/v2@latest
 ```
 
 ## Usage
@@ -90,30 +90,30 @@ version: "1"
 name: "go"
 root: "."
 casts:
-    README.md:
-        to: "./README.md"
-        from: |
-            # {{ .name | title }}
-            {{ .description }}
-            {{ .usage }}
-    main.go:
-        to: "./main.go"
-        from: |
-            package main
+  README.md:
+    to: "./README.md"
+    from: |
+      # {{ .name | title }}
+      {{ .description }}
+      {{ .usage }}
+  main.go:
+    to: "./main.go"
+    from: |
+      package main
 
-            import (
-                "fmt"
-            )
+      import (
+        "fmt"
+      )
 
-            func main() {
-                fmt.Println("Hello, world!")
-            }
-    .gitignore:
-        to: "./.gitignore"
-        from: |
-            {{ range .gitignore }}
-            {{ . }}
-            {{ end }}
+      func main() {
+        fmt.Println("Hello, world!")
+      }
+  .gitignore:
+    to: "./.gitignore"
+    from: |
+      {{ range .gitignore }}
+      {{ . }}
+      {{ end }}
 ```
 
 ### Example of React component with tests
@@ -129,60 +129,60 @@ version: "1"
 name: "react"
 root: "./{{ .name | kebab }}"
 casts:
-    index.js:
-        to: "./index.jsx"
-        from: |
-            import React from 'react';
-            import PropTypes from 'prop-types';
+  index.js:
+    to: "./index.jsx"
+    from: |
+      import React from 'react';
+      import PropTypes from 'prop-types';
 
-            const {{ .name | pascal }} = (props) => {
-                return (
-                    <div>
-                        {{ .name | pascal }}
-                    </div>
-                );
-            };
+      const {{ .name | pascal }} = (props) => {
+        return (
+          <div>
+            {{ .name | pascal }}
+          </div>
+        );
+      };
 
-            {{ .name | pascal }}.propTypes = {
-                name: PropTypes.string,
-            };
+      {{ .name | pascal }}.propTypes = {
+        name: PropTypes.string,
+      };
 
-            {{ .name | pascal }}.defaultProps = {
-                name: '{{ .name | pascal }}',
-            };
+      {{ .name | pascal }}.defaultProps = {
+        name: '{{ .name | pascal }}',
+      };
 
-            export default {{ .name | pascal }};
-    index.test.js:
-        to: "./index.test.js"
-        from: |
-            import React from 'react';
-            import { render } from '@testing-library/react';
-            import {{ .name | pascal }} from './index';
+      export default {{ .name | pascal }};
+  index.test.js:
+    to: "./index.test.js"
+    from: |
+      import React from 'react';
+      import { render } from '@testing-library/react';
+      import {{ .name | pascal }} from './index';
 
-            describe('{{ .name | pascal }}', () => {
-                it('should render the component', () => {
-                    const { container } = render(<{{ .name | pascal }} />);
-                    expect(container).toMatchSnapshot();
-                });
-            });
-    index.stories.js:
-        to: "./index.stories.jsx"
-        from: |
-            import React from 'react';
-            import {{ .name | pascal }} from './index';
+      describe('{{ .name | pascal }}', () => {
+        it('should render the component', () => {
+          const { container } = render(<{{ .name | pascal }} />);
+          expect(container).toMatchSnapshot();
+        });
+      });
+  index.stories.js:
+    to: "./index.stories.jsx"
+    from: |
+      import React from 'react';
+      import {{ .name | pascal }} from './index';
 
-            export default {
-                title: '{{ .name | pascal }}',
-                component: {{ .name | pascal }},
-            };
+      export default {
+        title: '{{ .name | pascal }}',
+        component: {{ .name | pascal }},
+      };
 
-            const Template = (args) => <{{ .name | pascal }} {...args} />;
+      const Template = (args) => <{{ .name | pascal }} {...args} />;
 
-            export const Default = Template.bind({});
-            Default.args = {
-                name: '{{ .name | pascal }}',
-            };
-        if: "{{ .stories }}"
+      export const Default = Template.bind({});
+      Default.args = {
+        name: '{{ .name | pascal }}',
+      };
+    if: "{{ .stories }}"
 ```
 
 ## License
@@ -191,9 +191,8 @@ See [LICENSE](LICENSE) for more information.
 
 ## Future work
 
-- [ ] Add support for more sources (e.g.: files or other magic manifest).
+- [ ] Add support for more sources (e.g.: files, or remote manifests).
 - [ ] Add support for more helpers (e.g.: shell scripts defined in the manifest).
-- [ ] Add verification of manifest templates.
 - [ ] Add support for more casts (e.g.: `copy`).
 - [ ] Add support for spells (aka actions) (e.g.: `append`, `format`, `compile`, ...).
 
@@ -207,7 +206,7 @@ See [CHANGELOG](CHANGELOG.md) for more information.
 
 ## Versioning
 
-This project uses [SemVer](https://semver.org/) for versioning. For the versions available, see [tags](https://github.com/ismtabo/magus/tags).
+This project uses [SemVer](https://semver.org/) for versioning. For the versions available, see [tags](https://github.com/ismtabo/magus/v2/tags).
 
 ## Contributors
 

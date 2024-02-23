@@ -3,10 +3,10 @@ package validate
 import (
 	"path/filepath"
 
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/file"
-	"github.com/ismtabo/magus/imports"
-	"github.com/ismtabo/magus/manifest"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/file"
+	"github.com/ismtabo/magus/v2/imports"
+	"github.com/ismtabo/magus/v2/manifest"
 )
 
 func NoCycles(ctx context.Context, mf manifest.Manifest) error {

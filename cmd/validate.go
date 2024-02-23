@@ -3,9 +3,9 @@ package cmd
 import (
 	"os"
 
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/manifest"
-	"github.com/ismtabo/magus/validate"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/manifest"
+	"github.com/ismtabo/magus/v2/validate"
 	"github.com/lithammer/dedent"
 	"github.com/spf13/cobra"
 )

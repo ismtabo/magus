@@ -1,6 +1,6 @@
 package template
 
-import "github.com/ismtabo/magus/context"
+import "github.com/ismtabo/magus/v2/context"
 
 // TemplatedString is a string that can be templated.
 type TemplatedString struct {

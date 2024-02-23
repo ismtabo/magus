@@ -2,13 +2,13 @@ package validate
 
 import (
 	"github.com/Masterminds/semver"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/manifest"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/manifest"
 )
 
 var (
 	// constraint is the constraint of the manifest version.
-	constraint = mustCompileConstraint("<=2.0.0")
+	constraint = mustCompileConstraint("2")
 )
 
 // Version validates the version of the manifest.
