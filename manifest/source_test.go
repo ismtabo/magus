@@ -5,10 +5,10 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/magic"
-	"github.com/ismtabo/magus/manifest"
-	"github.com/ismtabo/magus/source"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/magic"
+	"github.com/ismtabo/magus/v2/manifest"
+	"github.com/ismtabo/magus/v2/source"
 	"github.com/lithammer/dedent"
 	"github.com/stretchr/testify/assert"
 )

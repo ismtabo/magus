@@ -22,8 +22,9 @@ For further information about the Go template engine, please refer to the [offic
 
 ```yaml
 casts:
-  - from: "{{ .project_name }}.cast"
-    to: "{{ .project_name }}.cast"
+  - from: |
+     # {{ .project_name }}
+    to: "{{ .project_name }}.md"
     variables:
       - name: project_name
         value: My Project

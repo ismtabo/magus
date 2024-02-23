@@ -3,12 +3,12 @@ package cast_test
 import (
 	"testing"
 
-	"github.com/ismtabo/magus/cast"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/file"
-	"github.com/ismtabo/magus/source"
-	"github.com/ismtabo/magus/template"
-	"github.com/ismtabo/magus/variable"
+	"github.com/ismtabo/magus/v2/cast"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/file"
+	"github.com/ismtabo/magus/v2/source"
+	"github.com/ismtabo/magus/v2/template"
+	"github.com/ismtabo/magus/v2/variable"
 	"github.com/stretchr/testify/assert"
 )
 

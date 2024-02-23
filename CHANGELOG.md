@@ -8,9 +8,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
+* feat: add support for sources from other magic manifests
+
 ### Changed
 
 ### Deprecated
+
+* refactor: change go package to `github.com/ismtabo/magus/v2`
 
 ### Removed
 

@@ -1,4 +1,4 @@
-module github.com/ismtabo/magus
+module github.com/ismtabo/magus/v2
 
 go 1.20
 

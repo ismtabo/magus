@@ -1,11 +1,11 @@
 package manifest
 
 import (
-	"github.com/ismtabo/magus/cast"
-	"github.com/ismtabo/magus/condition"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/template"
-	"github.com/ismtabo/magus/variable"
+	"github.com/ismtabo/magus/v2/cast"
+	"github.com/ismtabo/magus/v2/condition"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/template"
+	"github.com/ismtabo/magus/v2/variable"
 )
 
 // NewCast creates a new cast from a manifest cast.

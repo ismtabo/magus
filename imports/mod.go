@@ -2,7 +2,7 @@ package imports
 
 import (
 	"github.com/benbjohnson/immutable"
-	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/v2/context"
 )
 
 type importCtxKey = string

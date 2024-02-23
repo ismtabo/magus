@@ -1,6 +1,6 @@
 package variable
 
-import "github.com/ismtabo/magus/context"
+import "github.com/ismtabo/magus/v2/context"
 
 var _ Variable = &LiteralVariable{}
 

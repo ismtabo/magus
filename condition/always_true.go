@@ -1,6 +1,6 @@
 package condition
 
-import "github.com/ismtabo/magus/context"
+import "github.com/ismtabo/magus/v2/context"
 
 // AlwaysTrueCondition is a condition that allways evaluates to true.
 type AlwaysTrueCondition struct{}

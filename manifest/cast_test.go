@@ -3,9 +3,9 @@ package manifest_test
 import (
 	"testing"
 
-	"github.com/ismtabo/magus/cast"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/manifest"
+	"github.com/ismtabo/magus/v2/cast"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/manifest"
 	"github.com/stretchr/testify/assert"
 )
 

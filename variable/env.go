@@ -3,7 +3,7 @@ package variable
 import (
 	"os"
 
-	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/v2/context"
 )
 
 var _ Variable = &EnvironmentVariable{}

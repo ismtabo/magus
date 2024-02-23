@@ -1,8 +1,8 @@
 package condition
 
 import (
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/template"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/template"
 )
 
 // TemplateCondition is a condition that evaluates a template.

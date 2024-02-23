@@ -1,7 +1,7 @@
 package manifest
 
 import (
-	"github.com/ismtabo/magus/file"
+	"github.com/ismtabo/magus/v2/file"
 )
 
 // Manifest is the representation of a manifest file.

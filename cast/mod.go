@@ -1,8 +1,8 @@
 package cast
 
 import (
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/file"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/file"
 )
 
 // Cast is the interface that wraps the Compile method.

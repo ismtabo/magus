@@ -5,9 +5,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/file"
-	"github.com/ismtabo/magus/fs"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/file"
+	"github.com/ismtabo/magus/v2/fs"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -3,8 +3,8 @@ package condition_test
 import (
 	"testing"
 
-	"github.com/ismtabo/magus/condition"
-	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/v2/condition"
+	"github.com/ismtabo/magus/v2/context"
 	"github.com/stretchr/testify/assert"
 )
 

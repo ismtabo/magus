@@ -6,7 +6,7 @@ import (
 
 	go_errors "github.com/pkg/errors"
 
-	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/v2/context"
 )
 
 var (

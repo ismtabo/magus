@@ -25,7 +25,7 @@ casts:
 
 ## Magic sources
 
-Magic sources are manifests that are included in the current manifest. They are defined by providing a `magic` property. The value of the property is the path to the manifest to include. The path is relative to the current manifest.
+Magic sources are magics that are included from other manifest files. They are defined by providing a `magic` property. The value of the property is the path to the manifest to include. The path is relative to the current manifest.
 
 All the variables defined in the current manifest are available in the magic source.
 

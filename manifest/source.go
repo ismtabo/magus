@@ -1,8 +1,8 @@
 package manifest
 
 import (
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/source"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/source"
 )
 
 func NewSource(ctx context.Context, s Source) source.Source {

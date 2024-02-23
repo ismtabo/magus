@@ -3,8 +3,8 @@ package imports_test
 import (
 	"testing"
 
-	"github.com/ismtabo/magus/file"
-	"github.com/ismtabo/magus/imports"
+	"github.com/ismtabo/magus/v2/file"
+	"github.com/ismtabo/magus/v2/imports"
 	"github.com/stretchr/testify/assert"
 )
 

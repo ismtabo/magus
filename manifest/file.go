@@ -1,8 +1,8 @@
 package manifest
 
 import (
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/fs"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/fs"
 )
 
 func Unmarshal(ctx context.Context, path string, manifest *Manifest) error {

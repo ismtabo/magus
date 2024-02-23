@@ -1,6 +1,6 @@
 package condition
 
-import "github.com/ismtabo/magus/context"
+import "github.com/ismtabo/magus/v2/context"
 
 // NegatedCondition is a condition that negates another condition.
 type NegatedCondition struct {

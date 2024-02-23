@@ -3,8 +3,8 @@ package manifest_test
 import (
 	"testing"
 
-	"github.com/ismtabo/magus/manifest"
-	"github.com/ismtabo/magus/variable"
+	"github.com/ismtabo/magus/v2/manifest"
+	"github.com/ismtabo/magus/v2/variable"
 	"github.com/stretchr/testify/assert"
 )
 

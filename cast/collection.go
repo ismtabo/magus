@@ -5,11 +5,11 @@ import (
 
 	go_errors "errors"
 
-	"github.com/ismtabo/magus/condition"
-	"github.com/ismtabo/magus/context"
-	"github.com/ismtabo/magus/errors"
-	"github.com/ismtabo/magus/file"
-	"github.com/ismtabo/magus/template"
+	"github.com/ismtabo/magus/v2/condition"
+	"github.com/ismtabo/magus/v2/context"
+	"github.com/ismtabo/magus/v2/errors"
+	"github.com/ismtabo/magus/v2/file"
+	"github.com/ismtabo/magus/v2/template"
 )
 
 var _ Cast = (*CollectionCast)(nil)

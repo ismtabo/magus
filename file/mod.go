@@ -5,7 +5,7 @@ import (
 
 	go_errors "errors"
 
-	"github.com/ismtabo/magus/context"
+	"github.com/ismtabo/magus/v2/context"
 )
 
 type File interface {
