@@ -26,6 +26,16 @@ func TestTemplateSource_Compile(t *testing.T) {
 		assert.Nil(t, err)
 		assert.Equal(t, []file.File{file.NewTextFile("/tmp/file.txt", "Hello John")}, actual)
 	})
+	t.Run("it should return compiled file if empty template", func(t *testing.T) {
+		ctx := context.New()
+		ctx = ctx.WithCwd("/tmp")
+		tmpl := ""
+
+		actual, err := source.NewTemplateSource(tmpl).Compile(ctx, "/tmp/file.txt")
+
+		assert.Nil(t, err)
+		assert.Equal(t, []file.File{file.NewTextFile("/tmp/file.txt", "")}, actual)
+	})
 
 	t.Run("it should return error if template is invalid", func(t *testing.T) {
 		vars := immutable.NewMap[string, any](nil)

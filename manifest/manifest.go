@@ -9,7 +9,7 @@ type Manifest struct {
 	// File is the file of the manifest.
 	file.File `yaml:"-"`
 	// Version is the version of the manifest.
-	Version Version `yaml:"version" validate:"required,semver"`
+	Version Version `yaml:"version" validate:"required"`
 	// Name is the name of the manifest.
 	Name string `yaml:"name" validate:"required"`
 	// Root is the output root dir of the manifest.
@@ -43,7 +43,7 @@ type Cast struct {
 	// To is the output path of the cast
 	To string `yaml:"to" validate:"required"`
 	// From is the input source of the cast
-	From Source `yaml:"from" validate:"dive"`
+	From Source `yaml:"from"`
 	// Variables is the variables of the cast
 	Variables Variables `yaml:"variables" validate:"dive"`
 	// If is the condition of the cast
