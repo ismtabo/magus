@@ -18,6 +18,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Security
 
+## [2.0.1] - (2024-02-26)
+
+### Fixed
+
+*   fix: mend validation of manifest
+*   fix: mend rendering of empty casts
+
 ## [2.0.0] - (2024-02-26)
 
 ### Added
