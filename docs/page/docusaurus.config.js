@@ -44,6 +44,13 @@ const config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/ismtabo/magus/tree/main/docs/page/',
+            lastVersion: 'current',
+            versions: {
+              current: {
+                label: '2.X',
+                path: '.',
+              }
+            }
         },
         blog: {
           showReadingTime: true,
