@@ -5,7 +5,7 @@ description: "Sources of casts"
 
 # Sources
 
-Sources are used to provide the cast content to be rendered. In [v1](../../versioned_docs/version-1.0.0/concepts/casts.md#cast-source-from), can be only defined by using templated string for the `from` property of casts. In this version, we include other magic manifests as sources.
+Sources are used to provide the cast content to be rendered. In [v1](../../versioned_docs/version-1.X/concepts/casts.md#cast-source-from), can be only defined by using templated string for the `from` property of casts. In this version, we include other magic manifests as sources.
 
 ## Template sources
 

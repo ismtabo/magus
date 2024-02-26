@@ -24,7 +24,7 @@ Destination is a path where the cast should be generated. It **must** be relativ
 
 ## Cast source (from)
 
-Source defined the content of the cast that should be rendered. In [v1](../../versioned_docs/version-1.0.0/concepts/casts.md#cast-source-from), source can just be defined by templated strings. Now, sources can also be defined by referencing to other magic manifest. See more in [Sources](./sources.md) page.
+Source defined the content of the cast that should be rendered. In [v1](../../versioned_docs/version-1.X/concepts/casts.md#cast-source-from), source can just be defined by templated strings. Now, sources can also be defined by referencing to other magic manifest. See more in [Sources](./sources.md) page.
 
 ## Cast variables
 

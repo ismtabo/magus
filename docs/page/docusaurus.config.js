@@ -76,9 +76,9 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'docsSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
           // {to: '/blog', label: 'Blog', position: 'left'},
           {
@@ -88,7 +88,7 @@ const config = {
             dropdownActiveClassDisabled: true,
           },
           {
-            href: 'https://pkg.go.dev/github.com/ismtabo/magus',
+            href: 'https://pkg.go.dev/github.com/ismtabo/magus/v2',
             label: 'GoDoc',
             position: 'right',
           },
@@ -116,7 +116,7 @@ const config = {
             items: [
               {
                 label: 'GoDoc',
-                href: 'https://pkg.go.dev/github.com/ismtabo/magus'
+                href: 'https://pkg.go.dev/github.com/ismtabo/magus/v2'
               },
               {
                 label: 'GitHub',

@@ -73,7 +73,7 @@ Given the following variables, this manifest will generate a React component wit
 - `gitignore`: List of gitignore rules.
 
 ```yaml
-version: "1"
+version: "2"
 name: "go"
 root: "."
 casts:
@@ -109,7 +109,7 @@ Given the following variables, this manifest will generate a React component wit
 - `stories`: Whether to generate stories or not.
 
 ```yaml
-version: "1"
+version: "2"
 name: "react"
 root: "."
 casts:
