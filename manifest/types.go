@@ -9,8 +9,8 @@ import (
 
 // EitherStringOrStruct is a union type of string or struct.
 type EitherStringOrStruct[T any] struct {
-	Str    string `validate:"required_without=Struct"`
-	Struct T      `validate:"required_without=Str"`
+	Str    string `validate:"excluded_with=Struct"`
+	Struct T      `validate:"excluded_with=Str"`
 	is_map bool
 }
 

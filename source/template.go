@@ -21,6 +21,11 @@ func NewTemplateSource(template string) TemplateSource {
 }
 
 func (s *templateSource) Compile(ctx context.Context, dest string) ([]file.File, error) {
+	if s.template == "" {
+		return []file.File{
+			file.NewTextFile(dest, ""),
+		}, nil
+	}
 	value, err := template.Engine.Render(ctx, s.template)
 	if err != nil {
 		return []file.File{}, err
