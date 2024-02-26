@@ -4,8 +4,10 @@ This page contains links to the different versions of the documentation.
 
 ## Next Version (Unreleased)
 
-- [Next Version](/docs/next/intro)
-
 ## Current Version (Stable)
 
-- [Version 1.0.0](/docs/intro)
+- [Version 2.X](/docs/intro)
+
+## Older Versions
+
+- [Version 1.X](/docs/1.X/intro)
